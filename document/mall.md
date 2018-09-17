@@ -463,13 +463,53 @@ public interface T_MALL_CLASS_1_mapper {
 
 3.创建spu.jsp
 
+```jsp
+spu商品信息管理
+	<hr>
+	一级：<select id="class_1_select" onchange="get_class_2(this.value);"><option>请选择</option></select>
+	二级：<select  id="class_2_select"><option>请选择</option></select>
+	品牌：<select  id="tm_select"><option>请选择</option></select><br>
+	查询<br>
+	<a href="javascript:goto_spu_add();">添加</a><br>
+	删除<br>
+	编辑<br>
+```
+
+```js
+	$(function (){
+		$.getJSON("js/json/class_1.js",function(data){
+			$(data).each(function(i,json){
+				$("#class_1_select").append("<option value="+json.id+">"+json.flmch1+"</option>");
+			});
+		});
+	});
+	
+	function get_class_2(class_1_id){
+		$.getJSON("js/json/class_2_"+class_1_id+".js",function(data){
+			$("#class_2_select").empty();
+			$(data).each(function(i,json){
+				$("#class_2_select").append("<option value="+json.id+">"+json.flmch2+"</option>");
+			});
+		});
+		
+		get_tm(class_1_id);
+	}
+	
+	function get_tm(class_1_id){
+		$.getJSON("js/json/tm_class_1_"+class_1_id+".js",function(data){
+			$("#tm_select").empty();
+			$(data).each(function(i,json){
+				$("#tm_select").append("<option value="+json.id+">"+json.ppmch+"</option>");
+			});
+		});
+	}
+```
+
 
 
 
 
 ## 4.商品发布的业务逻辑
-
-
 
 
 
