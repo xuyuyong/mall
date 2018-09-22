@@ -16,7 +16,6 @@ public class SpuController {
 
     @RequestMapping("goto_spu_add")
     public String goto_spu_add(ModelMap map, T_MALL_PRODUCT spu) {
-
         map.put("spu", spu);
         return "spuAdd";
     }
