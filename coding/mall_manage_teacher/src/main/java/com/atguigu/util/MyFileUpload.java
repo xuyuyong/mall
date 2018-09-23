@@ -15,16 +15,11 @@ import java.util.List;
  */
 public class MyFileUpload {
     public static List<String> upload_image(MultipartFile[] files) {
-
         String path = MyPropertyUtil.getProperty("myUpload.properties", "windows_path");
-
         List<String> list_image = new ArrayList<String>();
-
         for (int i = 0; i < files.length; i++) {
-
             if (!files[i].isEmpty()) {
                 String originalFilename = files[i].getOriginalFilename();
-
                 // UUID randomUUID = UUID.randomUUID();
                 String name = System.currentTimeMillis() + originalFilename;
                 String upload_name = path + "/" + name;
@@ -42,7 +37,6 @@ public class MyFileUpload {
             }
 
         }
-
         return list_image;
     }
 }

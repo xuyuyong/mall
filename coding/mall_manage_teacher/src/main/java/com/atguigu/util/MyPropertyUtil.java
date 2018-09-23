@@ -8,7 +8,7 @@ import java.util.Properties;
  * @author xuyuyong
  * Date: 2018/9/23
  * Time: 8:37
- * Content:
+ * Content: 获取properties数据工具类
  */
 public class MyPropertyUtil {
 
