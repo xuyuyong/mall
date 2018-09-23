@@ -18,13 +18,16 @@
 <body>
 	spu信息添加${spu.flbh1}|${spu.flbh2}|${spu.pp_id}
 	<hr>
-	<form action="spu_add.do">
-		商品名称：<input type="text" /><br>
-		商品描述：<textarea rows="10" cols="50"></textarea><br>
+	<form action="spu_add.do" enctype="multipart/form-data" method="post">
+		<input type="hidden" name="flbh1" value="${spu.flbh1}"/>
+		<input type="hidden" name="flbh2" value="${spu.flbh2}"/>
+		<input type="hidden" name="pp_id" value="${spu.pp_id}"/>
+		商品名称：<input type="text" name="shp_mch"/><br>
+		商品描述：<textarea rows="10" name="shp_msh"  cols="50"></textarea><br>
 		商品图片：<br>
-		<input type="file" /><br>
-		<input type="file" /><br>
-		<input type="file" /><br>
+		<input type="file" name="files"/><br>
+		<input type="file" name="files"/><br>
+		<input type="file" name="files"/><br>
 
 		<input type="submit" value="提交"/>
 	</form>
