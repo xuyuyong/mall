@@ -594,19 +594,111 @@ http://localhost:8080/goto_spu.do
     }
 ```
 
-1.设置spuAdd.jsp
-
-
-
-
+> c参数返回后台
 
 
 
 ## 2.商品spu图片上传服务
 
+### 1.设置spuAdd.jsp
+
+> 主要看图片返回后台
+>
+>  enctype="multipart/form-data" method="post"
+>
+> file 的name值保持一致
+
+```jsp
+<form action="spu_add.do" enctype="multipart/form-data" method="post">
+		<input type="hidden" name="flbh1" value="${spu.flbh1}"/>
+		<input type="hidden" name="flbh2" value="${spu.flbh2}"/>
+		<input type="hidden" name="pp_id" value="${spu.pp_id}"/>
+		商品名称：<input type="text" name="shp_mch"/><br>
+		商品描述：<textarea rows="10" name="shp_msh"  cols="50"></textarea><br>
+		商品图片：<br>
+		<input type="file" name="files"/><br>
+		<input type="file" name="files"/><br>
+		<input type="file" name="files"/><br>
+
+		<input type="submit" value="提交"/>
+	</form>
+```
+
+### 2.后台代码
+
+```java
+    @RequestMapping("spu_add")
+    public String spu_add(@RequestParam("files") MultipartFile[] files,T_MALL_PRODUCT spu) {
+        //图片上传
+        //商品信息提交
+        return "redirect:/goto_spu_add.do";
+    }
+```
+
+
+
+
+
 
 
 ## 3.文件上传
+
+### 1.增加myUpload.properties
+
+```properties
+window_path=D:\\project\\test\\mall\\file
+linux_path=/opt/upload
+```
+
+### 2.增加 获取properties数据工具类
+
+```java
+public class MyPropertyUtil {
+    public static String getProperty(String pro, String key) {
+        Properties properties = new Properties();
+        InputStream resourceAsStream = MyPropertyUtil.class.getClassLoader().getResourceAsStream(pro);
+        try {
+            properties.load(resourceAsStream);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        String property = properties.getProperty(key);
+        return property;
+    }
+}
+
+```
+
+### 3.增加 上传图片工具类
+
+```java
+public static List<String> upload_image(MultipartFile[] files) {
+        String path = MyPropertyUtil.getProperty("myUpload.properties", "windows_path");
+        List<String> list_image = new ArrayList<String>();
+        for (int i = 0; i < files.length; i++) {
+            if (!files[i].isEmpty()) {
+                String originalFilename = files[i].getOriginalFilename();
+                // UUID randomUUID = UUID.randomUUID();
+                String name = System.currentTimeMillis() + originalFilename;
+                String upload_name = path + "/" + name;
+
+                try {
+                    files[i].transferTo(new File(upload_name));
+                    list_image.add(name);
+                } catch (IllegalStateException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+
+        }
+        return list_image;
+    }
+```
 
 
 
@@ -614,7 +706,19 @@ http://localhost:8080/goto_spu.do
 
 
 
+
+
+
+
+
+
 ## 5.spu动态图片追加
+
+
+
+
+
+
 
 
 
@@ -622,7 +726,19 @@ http://localhost:8080/goto_spu.do
 
 
 
+
+
+
+
+
+
 ## 7.属性保存功能
+
+
+
+
+
+
 
 
 

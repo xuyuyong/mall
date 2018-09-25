@@ -2,12 +2,15 @@ package com.atguigu.controller;
 
 import com.atguigu.bean.T_MALL_PRODUCT;
 import com.atguigu.service.SpuServiceInf;
+import com.atguigu.util.MyFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * @author xuyuyong
@@ -31,9 +34,9 @@ public class SpuController {
     public String spu_add(@RequestParam("files") MultipartFile[] files,T_MALL_PRODUCT spu) {
 
         //图片上传
-
+        List<String> list_image = MyFileUpload.upload_image(files);
         //商品信息提交
-
+        spuServiceInf.save_spu(list_image, spu);
 
         return "redirect:/goto_spu_add.do";
     }
