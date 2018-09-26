@@ -704,7 +704,84 @@ public static List<String> upload_image(MultipartFile[] files) {
 
 ## 4.spu信息发布功能
 
+> 1.提交后传值
 
+```java
+    @RequestMapping("spu_add")
+    public ModelAndView spu_add(@RequestParam("files") MultipartFile[] files,T_MALL_PRODUCT spu) {
+
+        //图片上传
+        List<String> list_image = MyFileUpload.upload_image(files);
+        //商品信息提交
+        spuServiceInf.save_spu(list_image, spu);
+
+        ModelAndView mv = new ModelAndView("redirect:/goto_spu_add.do");
+        mv.addObject("flbh1", spu.getFlbh1());
+        mv.addObject("flbh2", spu.getFlbh2());
+        mv.addObject("pp_id", spu.getPp_id());
+        return mv;
+    }
+```
+
+
+
+> 2.mapper 的编写
+
+```java
+public interface SpuMapper {
+
+    /**
+     * 保存
+     * @param spu
+     */
+    void insert_spu(T_MALL_PRODUCT spu);
+
+    /**
+     * 保存图片
+     * @param map
+     */
+    void insert_images(Map<Object, Object> map);
+}
+```
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.mapper.SpuMapper">
+
+	<insert id="insert_images" parameterType="map">
+		insert into t_mall_product_image(shp_id,url)
+		values
+		<foreach collection="list_image" item="image" separator=",">
+			(#{shp_id},#{image})
+		</foreach>
+	</insert>
+
+	<insert useGeneratedKeys="true" keyColumn="id" keyProperty="id"
+		id="insert_spu" parameterType="com.atguigu.bean.T_MALL_PRODUCT">
+		insert into t_mall_product
+		(
+		shp_mch,
+		shp_tp,
+		flbh1,
+		flbh2,
+		pp_id,
+		shp_msh
+		)
+		values
+		(
+		#{shp_mch},
+		#{shp_tp},
+		#{flbh1},
+		#{flbh2},
+		#{pp_id},
+		#{shp_msh}
+		)
+	</insert>
+
+</mapper>
+
+```
 
 
 

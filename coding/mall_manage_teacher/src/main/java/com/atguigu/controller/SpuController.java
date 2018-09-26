@@ -9,6 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -31,13 +32,17 @@ public class SpuController {
     }
 
     @RequestMapping("spu_add")
-    public String spu_add(@RequestParam("files") MultipartFile[] files,T_MALL_PRODUCT spu) {
+    public ModelAndView spu_add(@RequestParam("files") MultipartFile[] files,T_MALL_PRODUCT spu) {
 
         //图片上传
         List<String> list_image = MyFileUpload.upload_image(files);
         //商品信息提交
         spuServiceInf.save_spu(list_image, spu);
 
-        return "redirect:/goto_spu_add.do";
+        ModelAndView mv = new ModelAndView("redirect:/goto_spu_add.do");
+        mv.addObject("flbh1", spu.getFlbh1());
+        mv.addObject("flbh2", spu.getFlbh2());
+        mv.addObject("pp_id", spu.getPp_id());
+        return mv;
     }
 }

@@ -1,6 +1,7 @@
 package com.atguigu.service.impl;
 
 import com.atguigu.bean.T_MALL_PRODUCT;
+import com.atguigu.mapper.SpuMapper;
 import com.atguigu.service.SpuServiceInf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,19 @@ import java.util.Map;
 @Service
 public class SpuServiceImpl implements SpuServiceInf {
 
-//    @Autowired
-//    private
+    @Autowired
+    private SpuMapper spuMapper;
 
     @Override
     public void save_spu(List<String> list_image, T_MALL_PRODUCT spu) {
+        // 插入spu信息,返回生成的主键
+        spu.setShp_tp(list_image.get(0));
+        spuMapper.insert_spu(spu);
 
+        // 根据spu的主键，批量插入spu图片
+        Map<Object, Object> map = new HashMap<Object, Object>();
+        map.put("shp_id", spu.getId());
+        map.put("list_image", list_image);
+        spuMapper.insert_images(map);
     }
 }
