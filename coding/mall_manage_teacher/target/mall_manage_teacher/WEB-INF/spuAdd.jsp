@@ -25,10 +25,9 @@
 		商品名称：<input type="text" name="shp_mch"/><br>
 		商品描述：<textarea rows="10" name="shp_msh"  cols="50"></textarea><br>
 		商品图片：<br>
-		<div id ="d_0" style="float:left;margin-left:10px;border:1px red solid;">
-			<input id="file_0" type="file" name="files" style="display:none;" onChange="replace_image(0)"/>
-			<img id="image_0" onclick="click_image(0)" style="cursor:pointer;" src="image/upload_hover.png" height="100px" width="100px"/>
-		</div>
+		<input type="file" name="files"/><br>
+		<input type="file" name="files"/><br>
+		<input type="file" name="files"/><br>
 
 		<input type="submit" value="提交"/>
 	</form>
