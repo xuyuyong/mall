@@ -811,15 +811,59 @@ public interface SpuMapper {
 
 #### 2.点击上传按钮触发file对象的点击事件
 
+```jsp
+<img id="image_0" onclick="click_image(0)" style="cursor:pointer;" src="image/upload_hover.png" height="100px" width="100px"/>
+```
+
+```js
+function click_image(index){
+		$("#file_"+index).click();
+
+	}
+```
 
 
-#### 3.选择图片后获得预览图对象
+
+#### 3.选择图片后,在浏览器加载完图片的blob对象后,获得预览图对象
+
+```jsp
+<input id="file_0" type="file" name="files" style="display:none;" onchange="replace_image(0)"/>
+```
+
+```js
+function replace_image(index){
+		// 获得图片对象
+		var blob_image = $("#file_"+index)[0].files[0];
+		var url = window.URL.createObjectURL(blob_image);
+		
+		// 替换image
+		$("#image_"+index).attr("src",url);
+		
+		var length = $(":file").length;
+		
+		if((index+1)==length){
+			// 用户选择的是最后一张图片
+			add_image(index);
+		}
+	
+	}
+```
+
+
 
 
 
 #### 4.将预览图对象替换上传按钮
 
-
+```js
+function add_image(index){
+   var a = '<div id ="d_'+(index+1)+'" style="float:left;margin-left:10px;border:1px red solid;">';
+   var b = '<input id="file_'+(index+1)+'" type="file" name="files" style="display:none;" onChange="replace_image('+(index+1)+')"/>'
+   var c = '<img id="image_'+(index+1)+'" onclick="click_image('+(index+1)+')" style="cursor:pointer;" src="image/upload_hover.png" width="100px" height="100px"/>'
+   var d = '</div>';
+   $("#d_"+index).after(a+b+c+d);
+}
+```
 
 #### 5.显示预览图后追加新的上传按钮
 
