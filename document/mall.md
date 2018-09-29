@@ -873,6 +873,76 @@ function add_image(index){
 
 ## 6.属性功能管理介绍
 
+> 1.选择添加或者查询属性时,需要选择分类列表
+>
+> 2.查询商品属性列表
+>
+> 3.添加平台分类属性
+>
+> 4.多重对象的同步表单参数提交
+
+### 1.增加返回参数实体类
+
+```java
+public class OBJECT_T_MALL_ATTR extends T_MALL_ATTR {
+
+	private List<T_MALL_VALUE> list_value;
+
+	public List<T_MALL_VALUE> getList_value() {
+		return list_value;
+	}
+
+	public void setList_value(List<T_MALL_VALUE> list_value) {
+		this.list_value = list_value;
+	}
+}
+```
+
+```JSP
+商品属性信息管理
+	<hr>
+	一级：<select id="attr_class_1_select" onchange="get_attr_class_2(this.value);"><option>请选择</option></select>
+	二级：<select  id="attr_class_2_select" onchange="get_attr_list(this.value)"><option>请选择</option></select>
+	<br>
+	查询<br>
+	<a href="javascript:goto_attr_add()">添加</a><br>
+	删除<br>
+	编辑<br>
+	<hr>
+	<div id="attrListInner"></div>
+```
+
+```js
+	$(function (){
+		$.getJSON("js/json/class_1.js",function(data){
+			$(data).each(function(i,json){
+				$("#attr_class_1_select").append("<option value="+json.id+">"+json.flmch1+"</option>");
+			});
+		});
+	});
+
+	function get_attr_class_2(class_1_id){
+		$.getJSON("js/json/class_2_"+class_1_id+".js",function(data){
+			$("#attr_class_2_select").empty();
+			$(data).each(function(i,json){
+				$("#attr_class_2_select").append("<option value="+json.id+">"+json.flmch2+"</option>");
+			});
+		});
+	}
+
+	function goto_attr_add(){
+		var class_2_id = $("#attr_class_2_select").val();
+		window.location.href="goto_attr_add.do?flbh2="+class_2_id;
+	}
+
+	function get_attr_list(flbh2){
+		// 异步查询
+		$.post("get_attr_list.do",{flbh2:flbh2},function(data){
+			$("#attrListInner").html(data);
+		});
+	}
+```
+
 
 
 
