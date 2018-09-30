@@ -1,5 +1,6 @@
 package com.atguigu.controller;
 
+import com.atguigu.bean.MODEL_T_MALL_ATTR;
 import com.atguigu.bean.OBJECT_T_MALL_ATTR;
 import com.atguigu.service.AttrServiceInf;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,18 +31,29 @@ public class AttrController {
         return "attrListInner";
     }
 
+    /**
+     * 跳转添加属性页面
+     * @param flbh2
+     * @param map
+     * @return
+     */
     @RequestMapping("goto_attr_add")
     public String goto_attr_add(int flbh2, ModelMap map) {
         map.put("flbh2", flbh2);
         return "attrAdd";
     }
 
-   /* @RequestMapping("attr_add")
+    /**
+     * 保存属性
+     * @param flbh2
+     * @return
+     */
+    @RequestMapping("attr_add")
     public ModelAndView attr_add(int flbh2, MODEL_T_MALL_ATTR list_attr) {
         // 保存属性
         attrServiceInf.save_attr(flbh2, list_attr.getList_attr());
         ModelAndView mv = new ModelAndView("redirect:/goto_attr_add.do");
         mv.addObject("flbh2", flbh2);
         return mv;
-    }*/
+    }
 }

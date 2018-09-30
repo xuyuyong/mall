@@ -16,12 +16,13 @@
 <title>硅谷商城</title>
 </head>
 <body>
-	后台管理首页
-	<hr>
-	<a href="goto_spu.do" target="_blank">商品信息管理</a><br>
-	<a href="goto_attr.do" target="_blank">商品属性管理</a><br>
-	商品库存单元管理<br>
-	商品缓存管理<br>
-	
+	属性列表内嵌页<br>
+	<c:forEach items="${list_attr}" var="attr">
+	    ${attr.shxm_mch}:
+		<c:forEach items="${attr.list_value}" var="val">
+			${val.shxzh}${val.shxzh_mch}
+		</c:forEach>
+		<br>
+	</c:forEach>
 </body>
 </html>

@@ -11,6 +11,11 @@ import java.util.List;
  */
 public interface AttrServiceInf {
 
+    /**
+     * 保存属性值
+     * @param flbh2
+     * @param list_attr
+     */
     void save_attr(int flbh2, List<OBJECT_T_MALL_ATTR> list_attr);
 
     List<OBJECT_T_MALL_ATTR> get_attr_list(int flbh2);

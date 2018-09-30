@@ -600,7 +600,7 @@ http://localhost:8080/goto_spu.do
 
 ## 2.商品spu图片上传服务
 
-### 1.设置spuAdd.jsp
+1.设置spuAdd.jsp
 
 > 主要看图片返回后台
 >
@@ -624,7 +624,7 @@ http://localhost:8080/goto_spu.do
 	</form>
 ```
 
-### 2.后台代码
+2.后台代码
 
 ```java
     @RequestMapping("spu_add")
@@ -643,14 +643,14 @@ http://localhost:8080/goto_spu.do
 
 ## 3.文件上传
 
-### 1.增加myUpload.properties
+1.增加myUpload.properties
 
 ```properties
 window_path=D:\\project\\test\\mall\\file
 linux_path=/opt/upload
 ```
 
-### 2.增加 获取properties数据工具类
+2.增加 获取properties数据工具类
 
 ```java
 public class MyPropertyUtil {
@@ -670,7 +670,7 @@ public class MyPropertyUtil {
 
 ```
 
-### 3.增加 上传图片工具类
+3.增加 上传图片工具类
 
 ```java
 public static List<String> upload_image(MultipartFile[] files) {
@@ -791,7 +791,7 @@ public interface SpuMapper {
 
 ## 5.spu动态图片追加
 
-### 1.图片上传预览
+1.图片上传预览
 
 > 1.上传按钮代替file对象
 >
@@ -803,13 +803,13 @@ public interface SpuMapper {
 >
 > 5.显示预览图后追加新的上传按钮
 
-#### 1.上传按钮代替file对象
+1.上传按钮代替file对象
 
 ![1538003568001](E:\project\test\mall\document\image\%5CUsers%5CUser%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1538003568001.png)
 
 
 
-#### 2.点击上传按钮触发file对象的点击事件
+2.点击上传按钮触发file对象的点击事件
 
 ```jsp
 <img id="image_0" onclick="click_image(0)" style="cursor:pointer;" src="image/upload_hover.png" height="100px" width="100px"/>
@@ -824,7 +824,7 @@ function click_image(index){
 
 
 
-#### 3.选择图片后,在浏览器加载完图片的blob对象后,获得预览图对象
+3.选择图片后,在浏览器加载完图片的blob对象后,获得预览图对象
 
 ```jsp
 <input id="file_0" type="file" name="files" style="display:none;" onchange="replace_image(0)"/>
@@ -853,7 +853,7 @@ function replace_image(index){
 
 
 
-#### 4.将预览图对象替换上传按钮
+4.将预览图对象替换上传按钮
 
 ```js
 function add_image(index){
@@ -865,7 +865,7 @@ function add_image(index){
 }
 ```
 
-#### 5.显示预览图后追加新的上传按钮
+5.显示预览图后追加新的上传按钮
 
 
 
@@ -881,7 +881,16 @@ function add_image(index){
 >
 > 4.多重对象的同步表单参数提交
 
-### 1.增加返回参数实体类
+1.增加返回参数实体类
+
+> 在IndexController中增加跳转查看属性信息页面方法
+
+```java
+	@RequestMapping("goto_attr")
+	public String goto_attr() {
+		return "attr";
+	}
+```
 
 ```java
 public class OBJECT_T_MALL_ATTR extends T_MALL_ATTR {
@@ -943,95 +952,450 @@ public class OBJECT_T_MALL_ATTR extends T_MALL_ATTR {
 	}
 ```
 
+## 7.属性保存功能跳转
 
+> 编写jsp页面
 
+```jsp
+添加商品属性
+	<hr>
+	<form action="attr_add.do">
+		<input type="text" value="${flbh2}" name="flbh2"/>
+		<table border="1" width="800px">
+			<tr><td>属性名：<input type="text" name="list_attr[0].shxm_mch"/></td><td></td><td>添加属性值</td></tr>
+			<tr><td>属性值：<input type="text" name="list_attr[0].list_value[0].shxzh"/></td><td>单位：<input type="text" name="list_attr[0].list_value[0].shxzh_mch"/></td><td>删除</td></tr>
+			<tr><td>属性值：<input type="text" name="list_attr[0].list_value[1].shxzh"/></td><td>单位：<input type="text" name="list_attr[0].list_value[1].shxzh_mch"/></td><td>删除</td></tr>
+		</table>
+		
+		<table border="1" width="800px">
+			<tr><td>属性名：<input type="text"  name="list_attr[1].shxm_mch"/></td><td></td><td>添加属性值</td></tr>
+			<tr><td>属性值：<input type="text"  name="list_attr[1].list_value[0].shxzh"/></td><td>单位：<input type="text" name="list_attr[1].list_value[0].shxzh_mch"/></td><td>删除</td></tr>
+			<tr><td>属性值：<input type="text"  name="list_attr[1].list_value[1].shxzh"/></td><td>单位：<input type="text" name="list_attr[1].list_value[1].shxzh_mch"/></td><td>删除</td></tr>
+		</table>
+		添加：<input type="submit" value="提交"/>
+	</form>
+```
 
+```java
+    /**
+     * 跳转添加属性页面
+     * @param flbh2
+     * @param map
+     * @return
+     */
+    @RequestMapping("goto_attr_add")
+    public String goto_attr_add(int flbh2, ModelMap map) {
+        map.put("flbh2", flbh2);
+        return "attrAdd";
+    }
 
-
-
-
-
-## 7.属性保存功能
-
-
-
-
-
-
-
-
+    /**
+     * 保存属性
+     * @param flbh2
+     * @return
+     */
+    @RequestMapping("attr_add")
+    public ModelAndView attr_add(int flbh2) {
+        // 保存属性
+        ModelAndView mv = new ModelAndView("redirect:/goto_attr_add.do");
+        mv.addObject("flbh2", flbh2);
+        return mv;
+    }
+```
 
 ## 8.属性双重集合参数
+
+> 增加参数类 `MODEL_T_MALL_ATTR` 因为没有list的getter setter 方法,后台不能获取前台的参数
+
+```java
+public class MODEL_T_MALL_ATTR {
+
+    private List<OBJECT_T_MALL_ATTR> list_attr;
+
+    public List<OBJECT_T_MALL_ATTR> getList_attr() {
+        return list_attr;
+    }
+
+    public void setList_attr(List<OBJECT_T_MALL_ATTR> list_attr) {
+        this.list_attr = list_attr;
+    }
+
+}
+```
+
+```jsp
+添加商品属性
+	<hr>
+	<form action="attr_add.do">
+		<input type="text" value="${flbh2}" name="flbh2"/>
+		<table border="1" width="800px">
+			<tr><td>属性名：<input type="text" name="list_attr[0].shxm_mch"/></td><td></td><td>添加属性值</td></tr>
+			<tr><td>属性值：<input type="text" name="list_attr[0].list_value[0].shxzh"/></td><td>单位：<input type="text" name="list_attr[0].list_value[0].shxzh_mch"/></td><td>删除</td></tr>
+			<tr><td>属性值：<input type="text" name="list_attr[0].list_value[1].shxzh"/></td><td>单位：<input type="text" name="list_attr[0].list_value[1].shxzh_mch"/></td><td>删除</td></tr>
+		</table>
+		
+		<table border="1" width="800px">
+			<tr><td>属性名：<input type="text"  name="list_attr[1].shxm_mch"/></td><td></td><td>添加属性值</td></tr>
+			<tr><td>属性值：<input type="text"  name="list_attr[1].list_value[0].shxzh"/></td><td>单位：<input type="text" name="list_attr[1].list_value[0].shxzh_mch"/></td><td>删除</td></tr>
+			<tr><td>属性值：<input type="text"  name="list_attr[1].list_value[1].shxzh"/></td><td>单位：<input type="text" name="list_attr[1].list_value[1].shxzh_mch"/></td><td>删除</td></tr>
+		</table>
+		添加：<input type="submit" value="提交"/>
+	</form>
+```
+
+
+
+
 
 
 
 ## 9.属性保存功能业务代码
 
+> 1.增加mapper
+>
+> 1)增加接口mapper
+>
+> 2)增加attrMappr.xml
 
+```java
+/**
+     * 增加属性值
+     * @param flbh2
+     * @param attr
+     */
+    void insert_attr(@Param("flbh2") int flbh2, @Param("attr") OBJECT_T_MALL_ATTR attr);
+
+    /**
+     * 增加属性值的具体属性
+     * @param attr_id
+     * @param list_value
+     */
+    void insert_values(@Param("attr_id") int attr_id, @Param("list_value") List<T_MALL_VALUE> list_value);
+```
+
+```xml
+<insert id="insert_attr" useGeneratedKeys="true" keyColumn="id"
+		keyProperty="attr.id">
+		insert into t_mall_attr(
+		shxm_mch,
+		flbh2
+		)
+		values
+		(
+		#{attr.shxm_mch},
+		#{flbh2}
+		)
+	</insert>
+
+	<insert id="insert_values">
+		insert into t_mall_value(
+		shxzh,
+		shxm_id,
+		shxzh_mch
+		)
+		values
+		<foreach collection="list_value" item="val" separator=",">
+			(
+			#{val.shxzh},
+			#{attr_id},
+			#{val.shxzh_mch}
+			)
+		</foreach>
+	</insert>
+```
+
+
+
+> 2.增加接口
+
+```java
+/**
+ * 保存属性值
+ * @param flbh2
+ * @param list_attr
+ */
+void save_attr(int flbh2, List<OBJECT_T_MALL_ATTR> list_attr);
+```
+
+> 3.编写接口逻辑
+
+```java
+@Autowired
+AttrMapper attrMapper;
+
+@Override
+public void save_attr(int flbh2, List<OBJECT_T_MALL_ATTR> list_attr) {
+    for (int i = 0; i < list_attr.size(); i++) {
+
+        // 插入属性，返回主键
+        OBJECT_T_MALL_ATTR attr = list_attr.get(i);
+        attrMapper.insert_attr(flbh2, attr);
+
+        // 获得返回主键批量插入属性值
+        attrMapper.insert_values(attr.getId(), attr.getList_value());
+    }
+
+}
+```
+
+> 4.编写controller
+
+```java
+/**
+ * 保存属性
+ * @param flbh2
+ * @return
+ */
+@RequestMapping("attr_add")
+public ModelAndView attr_add(int flbh2, MODEL_T_MALL_ATTR list_attr) {
+    // 保存属性
+    attrServiceInf.save_attr(flbh2, list_attr.getList_attr());
+    ModelAndView mv = new ModelAndView("redirect:/goto_attr_add.do");
+    mv.addObject("flbh2", flbh2);
+    return mv;
+}
+```
 
 ## 10.属性能业异步内嵌页
+
+> 1.编写controller控制跳转类
+
+```java
+@RequestMapping("get_attr_list")
+public String get_attr_list(int flbh2) {
+    map.put("flbh2", flbh2);
+    return "attrListInner";
+}
+```
+
+> 2.编写内嵌页和连接内嵌页
+>
+> 1) 在attr.jsp 增加 js 方法 
+
+```js
+	function get_attr_list(flbh2){
+		// 异步查询
+		$.post("get_attr_list.do",{flbh2:flbh2},function(data){
+			$("#attrListInner").html(data);
+		});
+	}
+```
+
+> 2)商品变换调用这个方法
+
+```jsp
+一级：<select id="attr_class_1_select" onchange="get_attr_class_2(this.value);"><option>请选择</option></select>
+二级：<select  id="attr_class_2_select" onchange="get_attr_list(this.value)"><option>请选择</option></select>
+```
+
+> 3.编写内嵌页(attrListInner.jsp)
 
 
 
 ## 11.属性集合查询
 
+1.mapper
+
+1)接口
+
+```java
+List<OBJECT_T_MALL_ATTR> select_attr_list(int flbh2);
+```
+
+2)xml
+
+> parameterType="int" 参数类型
+>
+> resultMap="select_attr_list_map" 返回类型,详情请看下面
+
+```xml
+<select id="select_attr_list" parameterType="int"
+   resultMap="select_attr_list_map">
+   select attr.id as attr_id ,attr.*,val.id as val_id ,val.*
+   from t_mall_attr attr ,
+   t_mall_value val where
+   attr.id = val.shxm_id
+   and
+   attr.flbh2 = #{flbh2}
+</select>
+```
+
+>1)autoMapping="true"  自动映射;
+>
+>2)<result column="attr_id" property="id" />  sql中的attr_id转成java的id
+>
+>3)collection 返回list使用
+>
+>4)association 嵌套实体类
+
+```xml
+<resultMap type="com.atguigu.bean.OBJECT_T_MALL_ATTR" id="select_attr_list_map"
+         autoMapping="true">
+   <result column="attr_id" property="id" />
+   <collection property="list_value" ofType="com.atguigu.bean.T_MALL_VALUE"
+            autoMapping="true">
+      <result column="val_id" property="id" />
+   </collection>
+</resultMap>
+```
+
+2.service
+
+1)接口
+
+```
+List<OBJECT_T_MALL_ATTR> get_attr_list(int flbh2);
+```
+
+2) 实现逻辑
+
+```java
+    @Override
+    public List<OBJECT_T_MALL_ATTR> get_attr_list(int flbh2) {
+        List<OBJECT_T_MALL_ATTR> list_attr = attrMapper.select_attr_list(flbh2);
+        return list_attr;
+    }
+```
+
+
+
+3.contrller
+
+```java
+@RequestMapping("get_attr_list")
+    public String get_attr_list(int flbh2, ModelMap map) {
+        List<OBJECT_T_MALL_ATTR> list_attr = new ArrayList<OBJECT_T_MALL_ATTR>();
+        list_attr = attrServiceInf.get_attr_list(flbh2);
+        map.put("flbh2", flbh2);
+        map.put("list_attr", list_attr);
+        return "attrListInner";
+    }
+```
+
+
+
+5.页面
+
+```jsp
+属性列表内嵌页<br>
+	<c:forEach items="${list_attr}" var="attr">
+	    ${attr.shxm_mch}:
+		<c:forEach items="${attr.list_value}" var="val">
+			${val.shxzh}${val.shxzh_mch}
+		</c:forEach>
+		<br>
+	</c:forEach>
+```
+
 
 
 # 三. sku
 
-## 1.属性的双重集合查询语句
+## 1.sku功能跳转
+
+1.跳转sku页面(INdexController)
+
+```java
+@RequestMapping("goto_sku")
+	public String goto_sku() {
+		return "sku";
+	}
+```
+
+2.编写sku.jsp
+
+```jsp
+sku商品信息管理
+<hr>
+一级：<select id="sku_class_1_select" onchange="get_class_2(this.value);"><option>请选择</option></select>
+二级：<select  id="sku_class_2_select"><option>请选择</option></select>
+查询<br>
+<a href="javascript:goto_sku_add();">添加</a><br>
+删除<br>
+编辑<br>
+```
+
+3.编写js
+
+```js
+$(function (){
+   $.getJSON("js/json/class_1.js",function(data){
+      $(data).each(function(i,json){
+         $("#sku_class_1_select").append("<option value="+json.id+">"+json.flmch1+"</option>");
+      });
+   });
+});
+
+function get_class_2(class_1_id){
+   $.getJSON("js/json/class_2_"+class_1_id+".js",function(data){
+      $("#sku_class_2_select").empty();
+      $(data).each(function(i,json){
+         $("#sku_class_2_select").append("<option value="+json.id+">"+json.flmch2+"</option>");
+      });
+   });
+}
+
+function goto_sku_add(){
+   var class_1_id =  $("#sku_class_1_select").val();
+   var class_2_id = $("#sku_class_2_select").val();
+   
+   window.location.href="goto_sku_add.do?flbh1="+class_1_id+"&flbh2="+class_2_id;
+}
+```
+
+4.编写controller(SkyController)
 
 
 
-## 2.sku功能介绍
+5.编写增加sku页面
 
 
 
-## 3.sku功能跳转
+6.修改main页面的跳转库存
 
 
 
-## 4.客户端js函数中的el表达式
+## 2.客户端js函数中的el表达式
 
 
 
-## 5.异步加载spu列表数据
+## 4.异步加载spu列表数据
 
 
 
-## 6.用复选框操作属性列表显示
+## 5.用复选框操作属性列表显示
 
 
 
-## 7.属性参数的提交
+## 6.属性参数的提交
 
 
 
-## 8.sku的数据结构说明
+## 7.sku的数据结构说明
 
 
 
-## 9.sku的添加业务实现
+## 8.sku的添加业务实现
 
 
 
-## 10.easyui的介绍
+## 9.easyui的介绍
 
 
 
-## 11.easyui的layout的初始化
+## 10.easyui的layout的初始化
 
 
 
-## 12.easyui手风琴控件介绍
+## 11.easyui手风琴控件介绍
 
 
 
-## 13.tree控件
+## 12.tree控件
 
 
 
-## 14.tab 控件
+## 13.tab 控件
 
 
 
