@@ -2,6 +2,7 @@ package com.atguigu.mapper;
 
 import com.atguigu.bean.T_MALL_PRODUCT;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,4 +24,11 @@ public interface SpuMapper {
      * @param map
      */
     void insert_images(Map<Object, Object> map);
+
+    /**
+     * 获取spu列表
+     * @param map
+     * @return
+     */
+    List<T_MALL_PRODUCT> select_spu_list(Map<Object, Object> map);
 }

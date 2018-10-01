@@ -1345,51 +1345,270 @@ function goto_sku_add(){
 
 4.编写controller(SkyController)
 
-
+```java
+@RequestMapping("goto_sku_add")
+public String goto_sku_add() {
+    return "skuAdd";
+}
+```
 
 5.编写增加sku页面
 
+```jsp
 
+品牌:<select id="sku_tm_select" name="pp_id" onchange="get_spu_list(this.value)"></select> 
+商品<select id="spu_list" name="id"></select>
+<hr>
+分类属性：<br>
+
+
+商品库存名称：<input type="text" name="sku_mch"/><br>
+商品库存数量：<input type="text" name="kc"/><br>
+商品库存价格：<input type="text" name="jg"/><br>
+商品库存地址：<input type="text" name="kcdz"/><br>
+<input type="submit" value="添加"/>
+```
 
 6.修改main页面的跳转库存
+
+```jsp
+<a href="goto_sku.do" target="_blank">商品库存单元管理</a><br>
+```
+
+7.增加mapper
+
+
 
 
 
 ## 2.客户端js函数中的el表达式
 
+> 1.js函数中可以使用el表达式的
+>
+> 2.el表达式不能使用js的环境变量
+
+在skuAdd.jsp页面中加入一级分类
+
+```js
+$(function (){
+   var flbh1 = "${flbh1}";
+   $.getJSON("js/json/tm_class_1_"+flbh1+".js",function(data){
+      $("#sku_tm_select").empty();
+      $(data).each(function(i,json){
+         $("#sku_tm_select").append("<option value="+json.id+">"+json.ppmch+"</option>");
+      });
+   });
+});
+```
+
+## 3.异步加载spu列表数据
+
+1.在spuController中加入获取spu列表信息
+
+调用spu列表异步方法->传递品牌和二级分类id->查询spu列表->返回json->页面加载json数据
+
+```java
+@RequestMapping("get_spu_list")
+@ResponseBody
+public List<T_MALL_PRODUCT> get_spu_list(int pp_id, int flbh2) {
+   List<T_MALL_PRODUCT> list_spu = spuServiceInf.get_spu_list(pp_id, flbh2);
+   return list_spu;
+}
+```
+
+2.编写skuAdd.jsp
+
+```jsp
+分类属性：<br>
+<c:forEach items="${list_attr}" var="attr" varStatus="status">
+    <input value="${attr.id}" name="list_attr[${status.index}].shxm_id" type="checkbox" onclick="show_val(${attr.id},this.checked)"/>${attr.shxm_mch}
+</c:forEach>
+<br>
+<c:forEach items="${list_attr}" var="attr"  varStatus="status">
+   <div id="val_${attr.id}" style="display:none;">
+      <c:forEach items="${attr.list_value}" var="val">
+         <input value="${val.id}" name="list_attr[${status.index}].shxzh_id" type="radio"/>${val.shxzh}${val.shxzh_mch}
+      </c:forEach>
+   </div>
+</c:forEach>
+```
 
 
-## 4.异步加载spu列表数据
+
+## 4.用复选框操作属性列表显示
 
 
 
-## 5.用复选框操作属性列表显示
+```js
+function show_val(attr_id,checked){
+
+   if(checked){
+      $("#val_"+attr_id).show();
+   }else{
+      $("#val_"+attr_id).hide();
+   }
+   
+   
+}
+```
+
+## 5.属性参数的提交
 
 
 
-## 6.属性参数的提交
 
 
+## 6.sku的添加业务实现
 
-## 7.sku的数据结构说明
+1.增加SkuMapper
 
+```java
+/**
+ * 保存sku
+ * @param sku
+ */
+void insert_sku(T_MALL_SKU sku);
 
+/**
+ * 保存sku属性和属性值关联
+ * @param map
+ */
+void insert_sku_av(Map<Object, Object> map);
+```
 
-## 8.sku的添加业务实现
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.mapper.SkuMapper">
 
+   <insert id="insert_sku" useGeneratedKeys="true" keyColumn="id"
+      keyProperty="id" parameterType="com.atguigu.bean.T_MALL_SKU">
+      insert into t_mall_sku(
+      shp_id,
+      kc,
+      jg,
+      sku_mch,
+      kcdz
+      )
+      values
+      (
+      #{shp_id},
+      #{kc},
+      #{jg},
+      #{sku_mch},
+      #{kcdz}
+      )
+   </insert>
 
+   <insert id="insert_sku_av" parameterType="map">
+      insert into
+      t_mall_sku_attr_value(
+      shxm_id,
+      shxzh_id,
+      shp_id,
+      sku_id
+      )
+      values
+      <foreach collection="list_av" item="av" separator=",">
+         (
+         #{av.shxm_id},
+         #{av.shxzh_id},
+         #{shp_id},
+         #{sku_id}
+         )
+      </foreach>
+   </insert>
+</mapper>
+```
 
-## 9.easyui的介绍
+2.编写保存
+
+```java
+@Autowired
+SkuMapper skuMapper;
+
+@Override
+public void save_sku(T_MALL_SKU sku, T_MALL_PRODUCT spu, List<T_MALL_SKU_ATTR_VALUE> list_attr) {
+    // 保存sku表，返回sku主键
+    sku.setShp_id(spu.getId());
+    skuMapper.insert_sku(sku);
+
+    // 根据sku主键批量保存属性关联表
+    Map<Object, Object> map = new HashMap<Object, Object>();
+    map.put("shp_id", spu.getId());
+    map.put("sku_id", sku.getId());
+    map.put("list_av", list_attr);
+    skuMapper.insert_sku_av(map);
+}
+```
+
+3.创建参数实体类
+
+```java
+public class MODEL_T_MALL_SKU_ATTR_VALUE {
+
+   List<T_MALL_SKU_ATTR_VALUE> list_attr;
+
+   public List<T_MALL_SKU_ATTR_VALUE> getList_attr() {
+      return list_attr;
+   }
+
+   public void setList_attr(List<T_MALL_SKU_ATTR_VALUE> list_attr) {
+      this.list_attr = list_attr;
+   }
+
+}
+```
+
+4.增加保存sku(skuController)
+
+```java
+@RequestMapping("save_sku")
+public ModelAndView save_sku(T_MALL_SKU sku, MODEL_T_MALL_SKU_ATTR_VALUE list_attr, T_MALL_PRODUCT spu,
+                             ModelMap map) {
+
+    skuServiceInf.save_sku(sku, spu, list_attr.getList_attr());
+
+    ModelAndView mv = new ModelAndView("redirect:/goto_sku_add.do");
+    mv.addObject("flbh1", spu.getFlbh1());
+    mv.addObject("flbh2", spu.getFlbh2());
+
+    return mv;
+}
+```
+
+## 7.easyui的介绍
+
+1.导入js包
+
+2.在main.jsp 页面加入js,css
+
+```jsp
+<link rel="stylesheet" type="text/css" href="js/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="js/easyui/themes/icon.css">
+<script type="text/javascript" src="js/easyui/jquery.easyui.min.js"></script>
+```
 
 
 
 ## 10.easyui的layout的初始化
 
-
+```jsp
+<div data-options="region:'north',border:false" style="height:60px;background:#B3DFDA;padding:10px">north region</div>
+<div data-options="region:'west',split:true,title:'West'" style="width:180px;padding:10px;">
+  
+</div>
+<div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width:100px;padding:10px;">east region</div>
+<div data-options="region:'south',border:false" style="height:50px;background:#A9FACD;padding:10px;">south region</div>
+<div data-options="region:'center',title:'Center'">
+</div>
+```
 
 ## 11.easyui手风琴控件介绍
 
-
+```jsp
+<div class="easyui-accordion" style="width:160px;">
+```
 
 ## 12.tree控件
 
@@ -1397,7 +1616,39 @@ function goto_sku_add(){
 
 ## 13.tab 控件
 
+1.创建tab页
 
+
+
+```js
+$('#tt').tabs('add',{    
+    title:title,    
+    href:url,    
+    closable:true,    
+    tools:[{    
+        iconCls:'icon-mini-refresh',    
+        handler:function(){    
+            alert('refresh');    
+        }    
+    }]    
+});
+
+function add_tab2(url,title){
+		// add a new tab panel    
+		$.post(url,function(data){
+			$('#tt').tabs('add',{    
+			    title:title,    
+			    content:data,    
+			    closable:true,    
+			    tools:[{    
+			        iconCls:'icon-mini-refresh',    
+			        handler:function(){    
+			            alert('refresh');    
+			        }    
+			    }]    
+			});
+		});
+```
 
 
 

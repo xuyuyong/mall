@@ -18,4 +18,12 @@ public interface SpuServiceInf {
      * @param spu
      */
     void save_spu(List<String> list_image, T_MALL_PRODUCT spu);
+
+    /**
+     * 获取spu列表
+     * @param pp_id
+     * @param flbh2
+     * @return
+     */
+    List<T_MALL_PRODUCT> get_spu_list(int pp_id, int flbh2);
 }

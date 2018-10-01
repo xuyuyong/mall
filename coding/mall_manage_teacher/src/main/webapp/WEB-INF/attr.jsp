@@ -8,7 +8,7 @@
 <html>
 <head>
 <base href="<%=basePath %>">
-<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<%--<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>--%>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script type="text/javascript">
 	$(function (){
@@ -39,6 +39,29 @@
 			$("#attrListInner").html(data);
 		});
 	}
+
+    function add_tab2(url,title){
+        // add a new tab panel
+        var b = $('#tt').tabs('exists',title);
+        if(!b) {
+            var class_2_id = $("#attr_class_2_select").val();
+            $.get(url+"?flbh2="+class_2_id, function (data) {
+                $('#tt').tabs('add', {
+                    title: title,
+                    content: data,
+                    closable: true,
+                    tools: [{
+                        iconCls: 'icon-mini-refresh',
+                        handler: function () {
+                            alert('refresh');
+                        }
+                    }]
+                });
+            });
+        }else {
+            $('#tt').tabs('select',title);
+        }
+    }
 </script>
 <title>硅谷商城</title>
 </head>
@@ -49,7 +72,7 @@
 	二级：<select  id="attr_class_2_select" onchange="get_attr_list(this.value)"><option>请选择</option></select>
 	<br>
 	查询<br>
-	<a href="javascript:goto_attr_add()">添加</a><br>
+	<a href="javascript:add_tab2('goto_attr_add.do','商品属性管理添加')">添加</a><br>
 	删除<br>
 	编辑<br>
 	<hr>

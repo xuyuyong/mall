@@ -12,11 +12,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
 
+    /**
+     * 跳转至商品库存
+     * @return
+     */
+    @RequestMapping("goto_sku")
+    public String goto_sku() {
+        return "sku";
+    }
+
+    /**
+     * 跳转至属性
+     * @return
+     */
     @RequestMapping("goto_attr")
     public String goto_attr() {
         return "attr";
     }
 
+    /**
+     * 跳转至spu
+     * @return
+     */
     @RequestMapping("goto_spu")
     public String goto_spu() {
         return "spu";
