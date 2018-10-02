@@ -7,36 +7,41 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f49c40d3-923e-41a3-896c-804b50cb9082" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/bean/MODEL_T_MALL_SKU_ATTR_VALUE.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/controller/SkuController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/mapper/SkuMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/service/SkuServiceInf.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/service/impl/SkuServiceImp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/mapper/SkuMapper.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/skuAdd.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/java/com/atguigu/controller/IndexController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/java/com/atguigu/util/MyFileUpload.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/java/com/atguigu/util/MyPropertyUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/resources/applicationContext.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/resources/dbConfig.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/resources/log4j.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/resources/mybatis-config.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/resources/spring-mvc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/WEB-INF/main.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/index.jsp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/jquery-1.7.2.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/class_1.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/class_2_10.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/class_2_11(1).js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/class_2_12.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/class_2_13.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/class_2_14.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/class_2_15.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/class_2_6.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/class_2_7.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/class_2_8.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/class_2_9.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/tm_class_1_10.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/tm_class_1_11.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/tm_class_1_12.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/tm_class_1_13.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/tm_class_1_14.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/tm_class_1_15.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/tm_class_1_6.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/tm_class_1_7.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/tm_class_1_8.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mall_sale_teacher/src/main/webapp/js/json/tm_class_1_9.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/controller/IndexController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/controller/IndexController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/controller/SpuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/controller/SpuController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/mapper/SpuMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/mapper/SpuMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/service/SpuServiceInf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/service/SpuServiceInf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/service/impl/SpuServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/service/impl/SpuServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/mapper/SpuMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mapper/SpuMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/attr.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/attr.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/attrAdd.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/attrAdd.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/attrListInner.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/attrListInner.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/main.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/main.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/sku.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/sku.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spu.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/spu.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/controller/IndexController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/controller/IndexController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/controller/SpuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/controller/SpuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/service/SpuServiceInf.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/service/SpuServiceInf.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/service/impl/SpuServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/service/impl/SpuServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/mall_manage_teacher/WEB-INF/classes/com/atguigu/controller/IndexController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/mall_manage_teacher/WEB-INF/classes/com/atguigu/controller/IndexController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/mall_manage_teacher/WEB-INF/classes/com/atguigu/controller/SpuController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/mall_manage_teacher/WEB-INF/classes/com/atguigu/controller/SpuController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/mall_manage_teacher/WEB-INF/classes/com/atguigu/service/SpuServiceInf.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/mall_manage_teacher/WEB-INF/classes/com/atguigu/service/SpuServiceInf.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/mall_manage_teacher/WEB-INF/classes/com/atguigu/service/impl/SpuServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/mall_manage_teacher/WEB-INF/classes/com/atguigu/service/impl/SpuServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/mall_manage_teacher/WEB-INF/main.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/target/mall_manage_teacher/WEB-INF/main.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../document/mall.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../document/mall.md" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -125,14 +130,15 @@
         <counts>
           <entry key="class" value="3" />
           <entry key="dtd" value="2" />
-          <entry key="java" value="21" />
-          <entry key="jsp" value="20" />
+          <entry key="java" value="23" />
+          <entry key="js" value="1" />
+          <entry key="jsp" value="21" />
           <entry key="png" value="1" />
           <entry key="properties" value="1" />
           <entry key="sql" value="2" />
           <entry key="t_mall_attr" value="1" />
           <entry key="t_mall_value" value="1" />
-          <entry key="xml" value="4" />
+          <entry key="xml" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
@@ -141,85 +147,100 @@
           <entry key="DTD" value="2" />
           <entry key="Database Element" value="2" />
           <entry key="Image" value="1" />
-          <entry key="JAVA" value="21" />
-          <entry key="JSP" value="20" />
+          <entry key="JAVA" value="23" />
+          <entry key="JSP" value="21" />
+          <entry key="JavaScript" value="1" />
           <entry key="Properties" value="1" />
           <entry key="Scratch" value="2" />
-          <entry key="XML" value="4" />
+          <entry key="XML" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="307" />
-          <entry key="jsp" value="76" />
+          <entry key="java" value="328" />
+          <entry key="jsp" value="138" />
           <entry key="sql" value="2" />
-          <entry key="xml" value="59" />
+          <entry key="xml" value="69" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="307" />
-          <entry key="JSP" value="76" />
+          <entry key="JAVA" value="328" />
+          <entry key="JSP" value="138" />
           <entry key="SQL" value="10" />
           <entry key="Scratch" value="2" />
-          <entry key="XML" value="49" />
+          <entry key="XML" value="59" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="3" />
+          <entry key="project.closed" value="4" />
           <entry key="project.open.time.16" value="1" />
           <entry key="project.open.time.17" value="1" />
           <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.24" value="1" />
           <entry key="project.open.time.3" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="900">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/main.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="12" column="7" lean-forward="true" selection-start-line="12" selection-start-column="7" selection-end-line="14" selection-end-column="85" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/attr.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="64" column="9" lean-forward="true" selection-start-line="12" selection-end-line="64" selection-end-column="9" />
+            <state relative-caret-position="162">
+              <caret line="54" column="20" selection-start-line="54" selection-start-column="20" selection-end-line="54" selection-end-column="20" />
+              <folding>
+                <element signature="e#1862#2655#0#HTML" />
+                <element signature="e#2760#4012#0#HTML" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/sku.jsp">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/main.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="10" column="85" lean-forward="true" selection-start-line="10" selection-start-column="85" selection-end-line="10" selection-end-column="85" />
+            <state relative-caret-position="406">
+              <caret line="23" column="15" lean-forward="true" selection-start-line="17" selection-start-column="12" selection-end-line="23" selection-end-column="15" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/spu.jsp">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="517">
-              <caret line="83" column="60" selection-start-line="83" selection-start-column="60" selection-end-line="83" selection-end-column="60" />
+            <state relative-caret-position="162">
+              <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/626e20b5-090a-4d60-afa0-84320ba5fc08/console.sql">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/atguigu/controller/IndexController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="4" column="16" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="16" />
+            <state relative-caret-position="486">
+              <caret line="51" column="5" lean-forward="true" selection-start-line="46" selection-start-column="4" selection-end-line="51" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/atguigu/controller/AttrController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="70">
+              <caret line="63" selection-start-line="63" selection-end-line="63" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -233,6 +254,12 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>attr_class_2_select</find>
+      <find>tt</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
@@ -249,10 +276,8 @@
         <option value="$PROJECT_DIR$/src/main/java/com/atguigu/mapper/AttrMapper.java" />
         <option value="$PROJECT_DIR$/src/main/resources/applicationContext.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/atguigu/controller/AttrController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/mapper/AttrMapper.xml" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/626e20b5-090a-4d60-afa0-84320ba5fc08/console.sql" />
-        <option value="$PROJECT_DIR$/src/main/java/com/atguigu/controller/IndexController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/mapper/SkuMapper.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/atguigu/mapper/SkuMapper.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/atguigu/controller/SpuController.java" />
@@ -267,9 +292,12 @@
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/attrAdd.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/attrListInner.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/skuAdd.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/main.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/sku.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/spu.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/atguigu/controller/AttrController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/atguigu/controller/IndexController.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/main.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/attr.jsp" />
       </list>
     </option>
@@ -317,8 +345,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -351,15 +377,6 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="atguigu" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mall_manage_teacher" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mall_manage_teacher" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="atguigu" type="462c0819:PsiDirectoryNode" />
-              <item name="bean" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="mall_manage_teacher" type="b2602c69:ProjectViewProjectNode" />
@@ -440,15 +457,17 @@
           <select />
         </subPane>
       </pane>
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538361232454" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538364257271" />
     <property name="database.console.LAST_STATE" value="false" />
-    <property name="last_opened_file_path" value="D:/BaiduNetdiskDownload/技术/电商/03_项目第三天开发  SKU/2017年3月26日上午/代码/mall_1018_manage_teacher" />
+    <property name="last_opened_file_path" value="D:/BaiduNetdiskDownload/技术/电商/04_项目第四天开发  easyui/代码/mall_1018_sale_teacher/pom.xml" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -573,18 +592,18 @@
       <workItem from="1538186607818" duration="7870000" />
       <workItem from="1538266699648" duration="10762000" />
       <workItem from="1538294444279" duration="1461000" />
-      <workItem from="1538354679392" duration="4413000" />
+      <workItem from="1538354679392" duration="5391000" />
+      <workItem from="1538389535737" duration="4906000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32624000" />
+    <option name="totallyTimeSpent" value="38508000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1549" height="837" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49666667" weight="0.28388402" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49666667" visible="true" weight="0.22724208" />
       <window_info id="Structure" order="1" sideWeight="0.50333333" side_tool="true" weight="0.2744437" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -595,7 +614,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.543379" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.543379" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -804,17 +823,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/atguigu/controller/AttrController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="73">
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#788#808#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/atguigu/mapper/SpuMapper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="226">
@@ -829,13 +837,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="243">
           <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/atguigu/controller/IndexController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="18" column="20" selection-start-line="18" selection-start-column="20" selection-end-line="18" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -965,17 +966,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/json/class_2_7.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/atguigu/controller/AttrController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="70">
+          <caret line="63" selection-start-line="63" selection-end-line="63" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/atguigu/controller/IndexController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="51" column="5" lean-forward="true" selection-start-line="46" selection-start-column="4" selection-end-line="51" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/main.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="12" column="7" lean-forward="true" selection-start-line="12" selection-start-column="7" selection-end-line="14" selection-end-column="85" />
+        <state relative-caret-position="406">
+          <caret line="23" column="15" lean-forward="true" selection-start-line="17" selection-start-column="12" selection-end-line="23" selection-end-column="15" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#4;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/attr.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="64" column="9" lean-forward="true" selection-start-line="12" selection-end-line="64" selection-end-column="9" />
+        <state relative-caret-position="162">
+          <caret line="54" column="20" selection-start-line="54" selection-start-column="20" selection-end-line="54" selection-end-column="20" />
+          <folding>
+            <element signature="e#1862#2655#0#HTML" />
+            <element signature="e#2760#4012#0#HTML" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
