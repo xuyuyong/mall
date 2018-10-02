@@ -15,6 +15,15 @@
         <script type="text/javascript" src="js/easyui/jquery.easyui.min.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript">
+            $(function(){
+                var url = "${url}";
+                var title = "${title}";
+                if(url!=""&&title!=""){
+                    add_tab(url,title);
+                }
+            });
+
+
             function add_tab(url,title){
                 // add a new tab panel
                 var b = $('#tt').tabs('exists',title);
@@ -81,7 +90,7 @@
         <div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width:100px;padding:10px;">east region</div>
         <div data-options="region:'south',border:false" style="height:50px;background:#A9FACD;padding:10px;">south region</div>
         <div data-options="region:'center',title:'Center'">
-            <div id="tt" class="easyui-tabs" >
+            <div id="tt" class="easyui-tabs" style="height:500px">
 
             </div>
         </div>

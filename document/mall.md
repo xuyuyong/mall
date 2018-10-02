@@ -1618,7 +1618,13 @@ public ModelAndView save_sku(T_MALL_SKU sku, MODEL_T_MALL_SKU_ATTR_VALUE list_at
 
 1.创建tab页
 
-
+> 选项卡内容的加载方式:
+>
+> 1..href属性加载,加载的返回页面中不包含HTML的head中的内容
+>
+> 2.通过ajax异步加载HTML,加载head的
+>
+> 3.通过ajax加载head中的内容,注意jquery的覆盖问题
 
 ```js
 $('#tt').tabs('add',{    
@@ -1655,6 +1661,88 @@ function add_tab2(url,title){
 # 四. easyui
 
 ## 1.数据表的用法
+
+1.attr.jsp页面增加easyui 表格(datagrid)
+
+```jsp
+<div id="attrListInner" class="easyui-datagrid"></div>
+```
+
+2.attr.jsp页面增加js
+
+```js
+$('#attrListInner').datagrid({    
+    url:'get_attr_list_json.do',   
+    queryParams: {
+       flbh2: flbh2
+   },
+    columns:[[    
+        {field:'id',title:'id',width:100},    
+        {field:'shxm_mch',title:'属性名',width:100},    
+        {field:'list_value',title:'属性值',width:300
+        },
+        {field:'chjshj',title:'创建时间',width:300
+        }
+    ]]    
+});  
+```
+
+3.AttrController增加get_attr_list_json
+
+```java
+@RequestMapping("get_attr_list_json")
+@ResponseBody
+public List<OBJECT_T_MALL_ATTR> get_attr_list_json(int flbh2, ModelMap map) {
+
+   List<OBJECT_T_MALL_ATTR> list_attr = new ArrayList<OBJECT_T_MALL_ATTR>();
+   list_attr = attrServiceInf.get_attr_list(flbh2);
+   return list_attr;
+}
+```
+
+4.修改js方法
+
+>  formatter: function (value, row, index)
+>
+> value:当前的参数值
+>
+> row:当前行的值
+>
+> index: 当前行号
+
+```js
+$('#attrListInner').datagrid({
+    url: 'get_attr_list_json.do',
+    queryParams: {
+        flbh2: flbh2
+    },
+    columns: [[
+        {field: 'id', title: 'id', width: 100},
+        {field: 'shxm_mch', title: '属性名', width: 100},
+        {
+            field: 'list_value', title: '属性值', width: 300,
+            formatter: function (value, row, index) {
+                var str = "";
+                // 处理字段值的代码
+                $(value).each(function (i, json) {
+                    str = str + json.shxzh + json.shxzh_mch + " ";
+                });
+                return str;
+            }
+        },
+        {
+            field: 'chjshj', title: '创建时间', width: 300,
+            formatter: function (value, row, index) {
+                var d = new Date(value);
+                var str = d.toLocaleString();
+                return str;
+            }
+        }
+    ]]
+});
+```
+
+
 
 
 
