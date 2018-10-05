@@ -1742,47 +1742,472 @@ $('#attrListInner').datagrid({
 });
 ```
 
-
-
-
-
 ## 2.combobox的用法
 
+> 在 attr.jsp 加入 js,注释掉之前的
+>
+> valueField 就是 value
+>
+> textField 就是显示的文字
 
+```js
+$('#attr_class_1_select').combobox({
+    url:'js/json/class_1.js',
+    valueField:'id',
+    textField:'flmch1',
+    width:200,
+    onChange:function get_attr_class_2(){
+        debugger
+        // 获取当前的下拉列表被选中的id
+        var class_1_id = $(this).combobox("getValue");
+        $('#attr_class_2_select').combobox({
+            url:"js/json/class_2_"+class_1_id+".js",
+            valueField:'id',
+            textField:'flmch2',
+            onChange:function (){
+                var flbh2 = $(this).combobox("getValue");
+                get_attr_list_json(flbh2);
+            },
+            width:200
+        });
+    }
+});
+```
 
 ## 3.嵌套布局的用法
+
+1.增加布局样式
+
+```jsp
+<div class="easyui-layout" data-options="fit:true">
+   <div data-options="region:'north',split:true" style="height:50px">
+         <div style="margin-top:10px;margin-left:10px">
+            一级：<select data-options="width:200" class="easyui-combobox" id="attr_class_1_select" onchange="get_attr_class_2(this.value);"><option>请选择</option></select>
+            二级：<select data-options="width:200" class="easyui-combobox"  id="attr_class_2_select" onchange="get_attr_list_json(this.value)"><option>请选择</option></select>
+            <a href="javascript:goto_attr_add()">添加</a><br>
+         </div>
+   </div>
+   <div data-options="region:'west',split:true" style="width:100px">
+      查询<br>
+      删除<br>
+      编辑<br>
+   </div>
+   <div data-options="region:'center'">
+      <div id="attrListInner" class="easyui-datagrid"></div>
+   </div>
+</div>
+```
+
+2.main页面加入
+
+```jsp
+<div id="tt" class="easyui-tabs" style="height:500px">
+
+</div>
+```
 
 
 
 ## 4.easyui同步提交跳转问题
 
+1.在 AttrController中的attr_add方法中加入
 
+```java
+ModelAndView mv = new ModelAndView("redirect:/index.do");//goto_attr_add.do
+//mv.addObject("flbh2", flbh2);
+mv.addObject("url","goto_attr_add.do?flbh2="+flbh2);
+mv.addObject("title","添加属性");
+return mv;
+```
+
+2.修改IndexController页面的index方法
+
+```java
+@RequestMapping("/index")
+private String index(String url, String title, ModelMap map){
+    map.put("url", url);
+    map.put("title", title);
+    return "main";
+}
+```
+
+3.main.jsp增加js
+
+```js
+$(function(){
+    var url = "${url}";
+    var title = "${title}";
+    if(url!=""&&title!=""){
+        add_tab(url,title);
+    }
+});
+```
+
+4.attr.jsp 中的goto_attr_add方法
+
+```js
+function goto_attr_add() {
+    var class_2_id = $("#attr_class_2_select").combobox("getValue")
+    add_tab2("goto_attr_add.do?flbh2="+class_2_id,"商品属性管理添加");
+    
+}
+```
 
 ## 5.乱码问题
 
+> 在web.xml中加入
 
+```xml
+<filter>
+   <filter-name>encodingFilter</filter-name>
+   <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+   <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+   </init-param>
+   <init-param>
+      <param-name>forceEncoding</param-name>
+      <param-value>true</param-value>
+   </init-param>
+</filter>
+<filter-mapping>
+   <filter-name>encodingFilter</filter-name>
+   <url-pattern>/*</url-pattern>
+</filter-mapping>
+```
 
-## 6.首页初始化
+## 6.首页初始化(交易系统)
 
+1.创建一个新系统框架
 
+2.在IndexController中加入方法
+
+```java
+/**
+ * 跳转至首页
+ * @param request
+ * @param map
+ * @return
+ */
+@RequestMapping("index")
+public String index(HttpServletRequest request, ModelMap map) {
+    return "index";
+}
+```
+
+3.创建三个共用的部分
+
+1.头部(登录显示)header.jsp
+
+```jsp
+<div class="top">
+   <div class="top_text">
+      <c:if test="${empty user}">
+         用户登录 用户注册
+      </c:if>
+      <c:if test="${not empty user}">
+         用户名称 用户订单
+      </c:if>
+   </div>
+```
+
+2.搜索(searchArea.jsp)
+
+```jsp
+<div class="search">
+   <div class="logo"><img src="./images/logo.jpg" alt=""></div>
+   <div class="search_on">
+      <div class="se">
+         <input type="text" name="search" class="lf">
+         <input type="submit" class="clik" value="搜索">
+      </div>
+      <div class="se">
+         <a href="">取暖神奇</a>
+         <a href="">1元秒杀</a>
+         <a href="">吹风机</a>
+         <a href="">玉兰油</a>
+      </div>
+   </div>
+   <div class="card">
+      <a href="">购物车<div class="num">0</div></a>
+      
+      <!--购物车商品-->
+      <div class="cart_pro">
+         <h6>最新加入的商品</h6>
+         <div class="one">
+            <img src="images/lec1.png"/>
+            <span class="one_name">
+               商品名称商品名称商品名称商品名称
+            </span>
+            <span class="one_prece">
+               <b>￥20000</b><br />
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除
+            </span>
+         </div>
+
+         <div class="gobottom">
+            共<span>2</span>件商品&nbsp;&nbsp;&nbsp;&nbsp;
+            共计￥<span>20000</span>
+            <button class="goprice">去购物车</button>
+         </div>
+      </div>
+   
+   </div>
+</div>
+```
+
+3.商品分类(classList.jsp)
+
+```jsp
+<div class="menu">
+   <div class="nav">
+      <div class="navs">
+         <div class="left_nav">
+            全部商品分类
+            <div class="nav_mini">
+               <ul  id="class_1_ul">
+                  <li>
+                     <a href="">家用电器</a>
+                     <div  id="class_2_ul" class="two_nav">
+                     </div>
+                  </li>
+                  <li><a href="">营养保健</a></li>
+                  <li><a href="">图书</a></li>
+                  <li><a href="">彩票</a></li>
+                  <li><a href="">理财</a></li>
+               </ul>
+            </div>
+         </div>
+         <ul>
+            <li><a href="">服装城</a></li>
+            <li><a href="">美妆馆</a></li>
+            <li><a href="">超市</a></li>
+            <li><a href="">全球购</a></li>
+            <li><a href="">闪购</a></li>
+            <li><a href="">团购</a></li>
+            <li><a href="">拍卖</a></li>
+            <li><a href="">金融</a></li>
+            <li><a href="">智能</a></li>
+         </ul>
+      </div>
+   </div>
+</div>
+```
+
+4.加入首页(index.jsp)
+
+```jsp
+<jsp:include page="header.jsp"></jsp:include> 
+<div class="top_img">
+   <img src="images/top_img.jpg" alt="">
+</div>
+<jsp:include page="searchArea.jsp"></jsp:include>
+<jsp:include page="classList.jsp"></jsp:include>
+
+<div class="banner">
+   <div class="ban">
+      <img src="images/banner.jpg" width="980" height="380" alt="">
+   </div>
+</div>
+```
 
 ## 7.用户登录方法
+
+1.创建登录controller(LoginController)
+
+```java
+@Autowired
+private LoginMapper loginMapper;
+
+@RequestMapping("login")
+public String goto_login(HttpSession session,T_MALL_USER_ACCOUNT user,
+                         HttpServletRequest request) {
+
+    // 登陆，远程用户认证接口
+    T_MALL_USER_ACCOUNT select_user = loginMapper.select_user(user);
+
+    if (select_user == null) {
+        return "redirect:/login.do";
+    } 
+    session.setAttribute("user", select_user);
+
+    return "redirect:/index.do";
+}
+```
+
+2.创建mapper(LoginMapper)
+
+```java
+/**
+ * 查询用户是否存在
+ * @param user
+ * @return
+ */
+T_MALL_USER_ACCOUNT select_user(T_MALL_USER_ACCOUNT user);
+```
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.mapper.LoginMapper">
+
+   <select id="select_user" parameterType="com.atguigu.bean.T_MALL_USER_ACCOUNT"
+      resultType="com.atguigu.bean.T_MALL_USER_ACCOUNT">
+      select * from t_mall_user_account where yh_mch = #{yh_mch}
+      and yh_mm = #{yh_mm}
+   </select>
+</mapper>
+```
+
+
+
+3.创建跳转至登录页方法(IndexController)
+
+```java
+@RequestMapping("goto_login")
+public String goto_login(HttpServletRequest request, ModelMap map) {
+    return "login";
+}
+```
+
+4.创建登录页(login.jsp)
+
+```jsp
+<head>
+    <base href="<%=basePath %>">
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="shortcut icon" type="image/icon" href="images/jd.ico">
+    <link rel="stylesheet" type="text/css" href="css/login.css">
+    <script type="text/javascript">
+        function to_submit() {
+            $("#login_form").submit();
+        }
+    </script>
+    <title>硅谷商城</title>
+</head>
+<body>
+    <div class="up">
+        <img src="images/logo.jpg" height="45px;" class="hy_img"/>
+        <div class="hy">
+            欢迎登录
+        </div>
+    </div>
+    <div class="middle">
+        <div class="login">
+            <div class="l1 ">
+                <div class="l1_font_01 ">硅谷会员</div>
+                <a class="l1_font_02 " href="<%=application.getContextPath() %>/to_regist.action">用户注册</a>
+            </div>
+            <div class="blank_01"></div>
+            <div class="ts">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${err}
+            </div>
+            <div class="blank_01"></div>
+            <form action="login.do" id="login_form" method="post">
+                <div class="input1">
+                    <input type="text" class="input1_01" name="yh_mch"/>
+                </div>
+                <div class="blank_01"></div>
+                <div class="blank_01"></div>
+                <div class="input2">
+                    <input type="text" class="input1_01" name="yh_mm"/>
+                </div>
+    
+                <div class="blank_01"></div>
+                <div class="blank_01"></div>
+                <div class="box_01">
+                    <div class="box_01_both">
+                        <div class="box_01_both_1">数据源1：<input type="radio" name="dataSource_type" value="1"/></div>
+                        <div class="box_01_both_2">数据源2：<input type="radio" name="dataSource_type" value="2"/></div>
+                    </div>
+                </div>
+            </form>
+            <div class="blank_01"></div>
+            <a href="javascript:;" class="aline">
+                <div class="red_button" onclick="to_submit()">
+                    登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录
+                </div>
+            </a>
+            <div class="blank_01"></div>
+            <div class="blank_01"></div>
+            <div class="box_down">
+                <div class="box_down_1">使用合作网站账号登录京东：</div>
+                <div class="box_down_1">京东钱包&nbsp;&nbsp;|&nbsp;&nbsp;QQ
+                    &nbsp;&nbsp;|&nbsp;&nbsp;微信
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="down">
+        <br/>
+        Copyright©2004-2015 xu.jb.com 版权所有
+    </div>
+</body>
+```
 
 
 
 ## 8.通过cookie取得用户的个性化
 
+1.LoginController的goto_login
+
+```java
+Cookie cookie = new Cookie("yh_mch", URLEncoder.encode(select_user.getYh_mch(), "utf-8"));
+// cookie.setPath("/");
+cookie.setMaxAge(60 * 60 * 24);
+response.addCookie(cookie);
+```
+
 
 
 ## 9.通过客户端cookie取得用户个性化信息
 
+header.jsp
+
+```js
+$(function (){
+   var yh_mch = getMyCookie("yh_nch");
+   $("#show_name").text(decodeURIComponent(yh_mch));
+});
+
+function getMyCookie(key){
+   var val = "";
+
+   // 对cookie操作
+   var cookies = document.cookie;
+   cookies = cookies.replace(/\s/,"");
+   var cookie_array = cookies.split(";");
+   for(i=0;i<cookie_array.length;i++){
+      // yh_mch=lilei
+      var cookie = cookie_array[i];
+      var array = cookie.split("=");
+      if(array[0]==key){
+         val = array[1];
+      }
+   }
+   
+   return val;
+}
+```
+
+> 修改jsp
+
+```
+<c:if test="${empty user}">
+   <a href="goto_login.do">用户登录:<span id="show_name" style="color:red"></span></a>
+   <a href="">用户注册</a>
+</c:if>
+<c:if test="${not empty user}">
+   <a href="">用户名称:${user.yh_mch}</a>
+   <a href="">用户订单</a>
+</c:if>
+```
 
 
-## 10.用户个性化信息
 
 
-
-## 11.任务总结
 
 
 
@@ -1790,89 +2215,913 @@ $('#attrListInner').datagrid({
 
 ## 1.商品检索简介
 
-
+![1538553306712](D:\project\test\mall\document\image\%5CUsers%5Cxuyuyong%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1538553306712.png)
 
 ## 2.商品分类检索
 
+1.修改classList.jsp的get_class_2方法
+
+```js
+$("#class_2_ul").append("<li value="+json.id+"><a href='goto_list.do?flbh2="+json.id+"' target='_blank'>"+json.flmch2+"</a></li>");
+```
+
+2.在项目uploud/image下增加图片
+
+3.修改`OBJECT_T_MALL_SKU`参数类
+
+```java
+public class OBJECT_T_MALL_SKU extends T_MALL_SKU {
+
+    private T_MALL_PRODUCT spu;
+    private T_MALL_TRADE_MARK tm;
+
+    public T_MALL_PRODUCT getSpu() {
+        return spu;
+    }
+
+    public void setSpu(T_MALL_PRODUCT spu) {
+        this.spu = spu;
+    }
+
+    public T_MALL_TRADE_MARK getTm() {
+        return tm;
+    }
+
+    public void setTm(T_MALL_TRADE_MARK tm) {
+        this.tm = tm;
+    }
+}
+```
+
+4.增加商品mapper(ListMapper,ListMapper.xml)
+
+```java
+List<OBJECT_T_MALL_SKU> select_list_by_flbh2(int flbh2);
+```
+
+```xml
+<select id="select_list_by_flbh2" parameterType="int"
+   resultMap="select_list_by_flbh2_map">
+   SELECT
+   spu.id as spu_id , spu.*,sku.id as sku_id ,sku.*,tm.id
+   as tm_id ,tm.*
+   FROM
+   t_mall_product spu,
+   t_mall_sku sku,
+   t_mall_trade_mark
+   tm
+   WHERE
+   spu.Id = sku.shp_id
+   and spu.pp_id = tm.Id
+   and spu.flbh2 =
+   #{flbh2}
+
+</select>
+
+<resultMap type="com.atguigu.bean.OBJECT_T_MALL_SKU" id="select_list_by_flbh2_map"
+   autoMapping="true">
+   <id column="sku_id" property="id" />
+   <association property="spu" javaType="com.atguigu.bean.T_MALL_PRODUCT"
+      autoMapping="true">
+      <id column="spu_id" property="id" />
+   </association>
+   <association property="tm" javaType="com.atguigu.bean.T_MALL_TRADE_MARK"
+      autoMapping="true">
+      <id column="tm_id" property="id" />
+   </association>
+</resultMap>
+```
+
+5.创建service(`ListServiceInf`,`ListServiceImp`)
+
+> ListServiceInf
+
+```java
+/**
+ * flbh2商品列表
+ * @param flbh2
+ * @return
+ */
+List<OBJECT_T_MALL_SKU> get_list_by_flbh2(int flbh2);
+```
+
+> ListServiceImp
+
+```java
+@Service
+public class ListServiceImp implements ListServiceInf {
+
+   @Autowired
+   ListMapper listMapper;
+
+   @Override
+   public List<OBJECT_T_MALL_SKU> get_list_by_flbh2(int flbh2) {
+      List<OBJECT_T_MALL_SKU> list_sku = listMapper.select_list_by_flbh2(flbh2);
+      return list_sku;
+   }
+}
+```
+
+6.修改IndexController的goto_list
+
+```java
+@RequestMapping("goto_list")
+public String goto_list(int flbh2, ModelMap map) {
+    // flbh2属性的集合
+    List<OBJECT_T_MALL_ATTR> list_attr = attrServiceInf.get_attr_list(flbh2);
+
+    // flbh2商品列表
+    List<OBJECT_T_MALL_SKU> list_sku = listServiceInf.get_list_by_flbh2(flbh2);
+
+    map.put("list_attr", list_attr);
+    map.put("list_sku", list_sku);
+    map.put("flbh2", flbh2);
+    return "list";
+}
+```
+
+7.创建list.jsp
+
+```jsp
+<jsp:include page="attrList.jsp"/>
+<hr>
+<div id = "skuListInner">
+   <jsp:include page="skuList.jsp"/>
+</div>
+```
+
+8.创建attrList.jsp
+
+```jsp
+<div id = "paramArea"></div>
+<hr>
+属性列表<br>
+<c:forEach items="${list_attr}" var="attr">
+    ${attr.shxm_mch}:
+   <c:forEach items="${attr.list_value}" var="val">
+      <a href="javascript:save_param(${attr.id},${val.id},'${val.shxzh}${val.shxzh_mch}');">${val.shxzh}${val.shxzh_mch}</a>
+   </c:forEach>
+   <br>
+</c:forEach>
+```
+
+9.创建skuList.jsp
+
+```jsp
+<c:forEach items="${list_sku}" var="sku">
+   <div style="margin-top:10px;margin-left:10px;float:left;border:1px red solid;width:250px;height:250px">
+      <img src="upload/image/${sku.spu.shp_tp}" width="150px" height="150px"><br>
+      ${sku.sku_mch}<br>
+      ${sku.jg}<br>
+      
+      ${sku.sku_xl}<br>
+   </div>
+</c:forEach>
+```
 
 
-## 3.商品分类检索sql
+
+## 3.商品属性检索介绍
+
+![1538618135257](D:\project\test\mall\document\image\%5CUsers%5Cxuyuyong%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1538618135257.png)
+
+> 1 点击属性
+>
+> 2 存储参数
+>
+> 3 调用ajax
+>
+> 4 传递参数
+>
+> 5 检索业务
+>
+> 6 返回html
+>
+> 7 刷新列表
 
 
 
-## 4.商品分类检索列表
+## 4.ajax字符串数据传参
+
+```js
+// 获得参数
+ var attrJson = {};
+$("#paramArea input[name='shxparam']").each(function(i,data){
+ 	attrJson["list_attr["+i+"].shxm_id"] = json.shxm_id;
+	attrJson["list_attr["+i+"].shxzh_id"] = json.shxzh_id;
+	attrJson["flbh2"]=${flbh2};
+}
+$.get("get_list_by_attr.do",attrJson,function(data){
+	$("#skuListInner").html(data);
+}); 
+```
+
+> 用js数组对象，ajax在转化为请求字符串时
+>
+> 会在参数名结尾加[],所以mvc中用@RequestParam("param_array[]")接收
+
+## 5.ajax字符串json传参
+
+```js
+var jsonStr = "flbh2="+${flbh2};
+$("#paramArea input[name='shxparam']").each(function(i,data){
+	var json = $.parseJSON(data.value);
+	jsonStr = jsonStr + "&list_attr["+i+"].shxm_id="+json.shxm_id+"&list_attr["+i+"].shxzh_id="+json.shxzh_id;
+});
+$.get("get_list_by_attr.do",jsonStr,function(data){
+	$("#skuListInner").html(data);
+}); 
+```
 
 
 
-## 5.商品属性检索介绍
+
+
+## 6.表单序列化传参
+
+```js
+var form = $("#loginForm").serialize();
+$.get("get_list_by_attr.do",form,function(data){
+	$("#skuListInner").html(data);
+});
+```
 
 
 
-## 6.ajax字符串数据传参
+## 7.动态SQL的设计方法
+
+> 任务: 多条件查询商品
+
+1.sql
+
+> 将属性的条件在逻辑层写成一个字符串写入sql
+
+```xml
+<select id="select_list_by_attr" parameterType="map"
+   resultMap="select_list_by_flbh2_map">
+   SELECT
+   spu.id as spu_id , spu.*,sku.id as sku_id ,sku.*,tm.id
+   as tm_id ,tm.*
+   FROM
+   t_mall_product spu,
+   t_mall_sku sku,
+   t_mall_trade_mark
+   tm
+   WHERE
+   spu.Id =
+   sku.shp_id
+   and spu.pp_id = tm.Id
+   and spu.flbh2 =
+   #{flbh2}
+   ${subSql}
+</select>
+```
+
+2.mapper(ListMapper)
+
+```xml
+List<OBJECT_T_MALL_SKU> select_list_by_attr(HashMap<Object, Object> hashMap);
+```
+
+3.接口(ListServiceInf)
+
+```java
+List<OBJECT_T_MALL_SKU> get_list_by_attr(List<T_MALL_SKU_ATTR_VALUE> list_attr, int flbh2);
+```
+
+4.实现逻辑(ListServiceImp)
+
+```java
+@Override
+public List<OBJECT_T_MALL_SKU> get_list_by_attr(List<T_MALL_SKU_ATTR_VALUE> list_attr, int flbh2) {
+
+   StringBuffer subSql = new StringBuffer("");
+   // 根据属性集合动态拼接条件过滤的sql语句
+   subSql.append(" and sku.id in ( select sku0.sku_id from ");
+   if (list_attr != null && list_attr.size() > 0) {
+      for (int i = 0; i < list_attr.size(); i++) {
+         subSql.append(
+               " (select sku_id from t_mall_sku_attr_value where shxm_id = " + list_attr.get(i).getShxm_id()
+                     + " and shxzh_id = " + list_attr.get(i).getShxzh_id() + ") sku" + i + " ");
+         if ((i + 1) < list_attr.size() && list_attr.size() > 1) {
+            subSql.append(" , ");
+         }
+      }
+
+      if (list_attr.size() > 1) {
+         subSql.append(" where ");
+         for (int i = 0; i < list_attr.size(); i++) {
+            if ((i + 1) < list_attr.size()) {
+               subSql.append(" sku" + i + ".sku_id=" + "sku" + (i + 1) + ".sku_id");
+               if(list_attr.size()>2&&i  < (list_attr.size()- 2)){
+                  subSql.append(" and ");
+               }
+            }
+         }
+      }
+   }
+
+   subSql.append(" ) ");
+
+   HashMap<Object, Object> hashMap = new HashMap<Object, Object>();
+   hashMap.put("flbh2", flbh2);
+   hashMap.put("subSql", subSql.toString());
+   List<OBJECT_T_MALL_SKU> list_sku = listMapper.select_list_by_attr(hashMap);
+   return list_sku;
+}
+```
+
+5.创建控制层(ListController)
+
+```java
+@Autowired
+ListServiceInf listServiceInf;
+
+/**
+ * 查询商品
+ * @param list_attr
+ * @param flbh2
+ * @param map
+ * @return
+ */
+@RequestMapping("get_list_by_attr")
+public String get_list_by_attr(MODEL_T_MALL_SKU_ATTR_VALUE list_attr, int flbh2, ModelMap map) {
+
+    // 根据属性查询列表的业务
+    List<OBJECT_T_MALL_SKU> list_sku = listServiceInf.get_list_by_attr(list_attr.getList_attr(), flbh2);
+    map.put("list_sku", list_sku);
+    return "skuList";
+}
+```
 
 
 
-## 7.ajax字符串json传参
+
+
+## 8.任务
+
+1 参数的上去和下来实现js
+
+2 参数的多选
 
 
 
-## 8.表单序列化传参
+## 9.单个商品详细功能
+
+1.增加两个实体类
+
+```java
+public class OBJECT_AV_NAME {
+
+   private String shxm_mch;
+   private String shxzh_mch;
+```
+
+```java
+public class DETAIL_T_MALL_SKU extends T_MALL_SKU {
+
+   private T_MALL_PRODUCT spu;
+   private List<T_MALL_PRODUCT_IMAGE> list_image;
+   private List<OBJECT_AV_NAME> list_av_name;
+```
+
+2.增加mapper(ItemMapper)
+
+```java
+DETAIL_T_MALL_SKU select_detail_sku(Map<Object, Object> map);
+
+List<T_MALL_SKU> select_skuList_by_spu(int spu_id);
+```
+
+> ItemMapper.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.mapper.ItemMapper">
+
+   <select id="select_skuList_by_spu" parameterType="int"
+      resultType="com.atguigu.bean.T_MALL_SKU">
+      select * from t_mall_sku where shp_id = #{spu_id}
+   </select>
+
+   <select id="select_detail_sku" parameterType="Map"
+      resultMap="select_detail_sku_map">
+      SELECT
+      sku.id as sku_id,
+      spu.id as spu_id,
+      img.id as img_id,
+      attr.shxm_mch as shxm_mch,
+      CONCAT(val.shxzh,val.shxzh_mch) as
+      shxzh_mch,
+      sku.*,spu.*,img.*
+      FROM
+      t_mall_sku sku,
+      t_mall_product spu,
+      t_mall_product_image img,
+      t_mall_attr attr,
+      t_mall_value val,
+      t_mall_sku_attr_value av
+      WHERE
+      sku.shp_id = spu.Id
+      AND spu.Id =
+      img.shp_id
+      AND sku.Id = av.sku_id
+      AND av.shxm_id = attr.Id
+      AND
+      av.shxzh_id = val.Id
+      and sku.Id = #{sku_id}
+
+   </select>
+
+
+   <resultMap autoMapping="true" type="com.atguigu.bean.DETAIL_T_MALL_SKU"
+      id="select_detail_sku_map">
+      <id column="sku_id" property="id" />
+
+      <association property="spu" javaType="com.atguigu.bean.T_MALL_PRODUCT"
+         autoMapping="true">
+         <id column="spu_id" property="id" />
+      </association>
+      <collection property="list_image"
+         ofType="com.atguigu.bean.T_MALL_PRODUCT_IMAGE" autoMapping="true">
+         <id column="img_id" property="id" />
+      </collection>
+      <collection property="list_av_name" ofType="com.atguigu.bean.OBJECT_AV_NAME"
+         autoMapping="true">
+      </collection>
+
+   </resultMap>
+</mapper>
+```
+
+3.增加service(ItemServiceInf)
+
+```java
+	DETAIL_T_MALL_SKU get_sku_detail(int sku_id);
+
+	List<T_MALL_SKU> get_sku_list_by_spu(int spu_id);
+```
+
+4.ItemServiceImp
+
+```java
+@Service
+public class ItemServiceImp implements ItemServiceInf {
+
+   @Autowired
+   ItemMapper itemMapper;
+
+   @Override
+   public DETAIL_T_MALL_SKU get_sku_detail(int sku_id) {
+      HashMap<Object, Object> hashMap = new HashMap<Object, Object>();
+      hashMap.put("sku_id", sku_id);
+      DETAIL_T_MALL_SKU obj_sku = itemMapper.select_detail_sku(hashMap);
+      return obj_sku;
+   }
+
+   @Override
+   public List<T_MALL_SKU> get_sku_list_by_spu(int spu_id) {
+      return itemMapper.select_skuList_by_spu(spu_id);
+
+   }
+
+}
+```
+
+5.ItemController
+
+```java
+@Controller
+public class ItemController {
+
+   @Autowired
+   ItemServiceInf itemServiceInf;
+
+   @RequestMapping("goto_sku_detail")
+   public String goto_sku_detail(int sku_id, int spu_id, ModelMap map) {
+
+      // 查询商品详细信息对象
+      DETAIL_T_MALL_SKU obj_sku = itemServiceInf.get_sku_detail(sku_id);
+
+      // 查询同spu下的相关的其他sku信息
+      List<T_MALL_SKU> list_sku = itemServiceInf.get_sku_list_by_spu(spu_id);
+
+      // 查询商品销售属性列表
+      // 颜色列表
+      // 版本列表
+      
+      map.put("obj_sku", obj_sku);
+      map.put("list_sku", list_sku);
+
+      return "skuDetail";
+   }
+
+}
+```
+
+6.skuDetail.jsp
+
+```jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@page isELIgnored="false"  %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<base href="<%=basePath %>">
+<link rel="stylesheet" type="text/css" href="css/css.css">
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+   function cart_submit(){
+      
+      $("#cart_form").submit();
+   }
+</script>
+<title>硅谷商城</title>
+</head>
+<body>
+   <div class="Dbox">
+      <div class="box">
+         <div class="left">
+            <div class="timg"><img src="images/img_5.jpg" alt=""></div>
+            <div class="timg2">
+               <div class="lf"><img src="images/lf.jpg" alt=""></div>
+               <div class="center">
+                  <span><img src="images/icon_2.jpg" alt=""></span>
+                  <span><img src="images/icon_3.jpg" alt=""></span>
+                  <span><img src="images/icon_2.jpg" alt=""></span>
+                  <span><img src="images/icon_3.jpg" alt=""></span>
+                  <span><img src="images/icon_2.jpg" alt=""></span>
+               </div>
+               <div class="rg"><img src="images/rg.jpg" alt=""></div>
+            </div>
+            <div class="goods"><img src="images/img_6.jpg" alt=""></div>
+         </div>
+         <div class="cent">
+            <div class="title">${obj_sku.sku_mch}</div>
+            <div class="bg">
+               <p>市场价：<strong>￥${obj_sku.jg}</strong></p>
+               <p>促销价：<strong>￥${obj_sku.jg}</strong></p>
+            </div>
+            <div class="clear">
+               <div class="min_t">选择版本：</div>
+                  <c:forEach items="${list_sku}" var="sku">
+                     <div class="min_mx"><a href="goto_sku_detail.do?sku_id=${sku.id}&spu_id=${sku.shp_id}" >${sku.sku_mch}</a></div>
+                  </c:forEach>
+            </div>
+            <div class="clear">
+               <div class="min_t" >服务：</div>
+               <div class="min_mx" >服务1号1</div>
+               <div class="min_mx" >服务二号1112</div>
+               <div class="min_mx" >55英服务二号1111寸活动中3</div>
+               <div class="min_mx" >4</div>
+               <div class="min_mx" >呃呃呃5</div>
+               <div class="min_mx" >55英寸活动中6</div>
+            </div>
+            <div class="clear" style="margin-top:20px;">
+               <div class="min_t" style="line-height:36px">数量：</div>
+               <div class="num_box">
+                  <input type="text" name="num" value="1" style="width:40px;height:32px;text-align:center;float:left">
+                  <div class="rg">
+                     <img src="images/jia.jpg" id='jia' alt="">
+                     <img src="images/jian.jpg" id='jian' alt="">
+                  </div>
+               </div>
+            </div>
+            <div class="clear" style="margin-top:20px;">
+                  <form  id="cart_form" action="add_cart.do" method="post">
+                     <input type="hidden" name="sku_mch" value="${obj_sku.sku_mch}" />
+                     <input type="hidden" name="sku_jg" value="${obj_sku.jg}" />
+                     <input type="hidden" name="tjshl" value="1" />
+                     <input type="hidden" name="hj" value="${obj_sku.jg}" />
+                     <input type="hidden" name="shp_id" value="${obj_sku.shp_id}" />
+                     <input type="hidden" name="sku_id" value="${obj_sku.id}" />
+                     <input type="hidden" name="shp_tp" value="${obj_sku.spu.shp_tp}" />
+                     <input type="hidden" name="shfxz" value="1" />
+                     <input type="hidden" name="kcdz" value="${obj_sku.kcdz}" />
+                     <c:if test="${not empty user}">
+                        <input type="hidden" name="yh_id" value="${user.id}" />
+                     </c:if>
+                     <img src="images/shop.jpg" onclick="cart_submit()" alt="" style="cursor:pointer;">
+                  </form>       
+               
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="Dbox1">
+      <div class="boxbottom">
+         <div class="top">
+            <span>商品详情</span>
+
+
+            <span>评价</span>
+         </div>
+         <div class="btm">
+            ${obj_sku.spu.shp_msh}
+            <c:forEach items="${obj_sku.list_image}" var="image">
+               <img src="upload/image/${image.url}" height="200px"/>
+            </c:forEach>      
+            <c:forEach items="${obj_sku.list_av_name}" var="av_name">
+               ${av_name.shxm_mch}:${av_name.shxzh_mch}<br>
+            </c:forEach>
+         </div>
+      </div>
+   </div>
+
+</body>
+</html>
+```
 
 
 
-## 9.动态SQL的设计方法
+### 9.1 任务
 
-
-
-## 10.任务
-
-
-
-11.
+1. 颜色列表 
+2. 版本列表
 
 
 
 # 六. 购物车
 
-## 1.商品详细信息
+## 1.购物车介绍
+
+一.浏览器本地的购物车信息
+1用户未登陆时，购物车使用的本地的cookie
+2 list_cart_cookie
+3没有用户id和购物车id
 
 
 
-## 2.商品详细跳转
+二.服务器持久层购物车信息
+1用户登录时，购物车针对持久层的操作
+2 list_cart_db
+3有购物车id和用户id
 
 
 
-## 3.商品详细功能
+三.服务器缓存中的购物车信息
+1用户登录时，购物车查询，使用的缓存(redis/session)
+2 list_cart_session
+3有购物车id和用户id
 
 
 
-## 4.商品详细实现
+功能介绍
 
+1 购物车添加
 
+![1538707253381](D:\project\test\mall\document\image\%5CUsers%5Cxuyuyong%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1538707253381.png)
 
-## 5.商品销售属性
+2 购物车查询
 
+3 购物车同步
 
+4 购物车操做
 
-## 6.购物车介绍
+ 
 
+## 2.购物车cookie和session介绍
 
+![1538707299245](D:\project\test\mall\document\image\cookie_session.png)
 
-## 7.购物车cookie和session介绍
+## 3.购物车添加的实现逻辑
 
+1.创建mapper(CartMapper)
 
+```java
+public interface CartMapper {
 
-## 8.购物车添加的实现逻辑
+   List<T_MALL_SHOPPINGCAR> select_list_cart_by_user(int user_id);
 
+   void insert_cart(T_MALL_SHOPPINGCAR cart);
 
+   void update_cart(T_MALL_SHOPPINGCAR cart);
 
-## 9.购物车添加实现逻辑
+   int select_cart_exists(T_MALL_SHOPPINGCAR cart);
 
+}
+```
 
+> CartMapper.xml
 
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.mapper.CartMapper">
 
+   <select id="select_cart_exists" parameterType="com.atguigu.bean.T_MALL_SHOPPINGCAR"
+      resultType="int">
+      select count(1) from t_mall_shoppingCar where sku_id =
+      #{sku_id}
+   </select>
 
+   <select id="select_list_cart_by_user" parameterType="com.atguigu.bean.T_MALL_USER_ACCOUNT"
+      resultType="com.atguigu.bean.T_MALL_SHOPPINGCAR">
+      select * from t_mall_shoppingCar where yh_id = #{id}
+   </select>
 
+   <insert id="insert_cart" useGeneratedKeys="true" keyColumn="id"
+      keyProperty="id" parameterType="com.atguigu.bean.T_MALL_SHOPPINGCAR">
+      insert into
+      t_mall_shoppingCar(
+      sku_mch,
+      sku_jg,
+      tjshl,
+      hj,
+      yh_id,
+      shp_id,
+      sku_id,
+      shp_tp,
+      kcdz
+      )
+      values
+      (
+      #{sku_mch},
+      #{sku_jg},
+      #{tjshl},
+      #{hj},
+      #{yh_id},
+      #{shp_id},
+      #{sku_id},
+      #{shp_tp},
+      #{kcdz}
+      )
+   </insert>
+
+   <update id="update_cart" parameterType="com.atguigu.bean.T_MALL_SHOPPINGCAR">
+      update t_mall_shoppingCar
+      <set>
+         <if test="tjshl!=0">
+            tjshl = #{tjshl},
+         </if>
+         <if test="hj!=0">
+            hj = #{hj},
+         </if>
+         <if test="shfxz!=null and shfxz!=''">
+            shfxz = #{shfxz},
+         </if>
+      </set>
+      where sku_id = #{sku_id}
+      <if test="yh_id!=0">
+         and yh_id = #{yh_id}
+      </if>
+   </update>
+
+</mapper>
+```
+
+2.创建接口(CartServiceInf)
+
+```java
+public interface CartServiceInf {
+
+   void add_cart(T_MALL_SHOPPINGCAR cart);
+
+   void update_cart(T_MALL_SHOPPINGCAR cart);
+
+   boolean if_cart_exists(T_MALL_SHOPPINGCAR cart);
+
+}
+```
+
+3.实现接口(CartServiceImp)
+
+```java
+@Service
+public class CartServiceImp implements CartServiceInf {
+
+   @Autowired
+   CartMapper cartMapper;
+
+   @Override
+   public void add_cart(T_MALL_SHOPPINGCAR cart) {
+      cartMapper.insert_cart(cart);
+
+   }
+
+   @Override
+   public void update_cart(T_MALL_SHOPPINGCAR cart) {
+      cartMapper.update_cart(cart);
+   }
+
+   @Override
+   public boolean if_cart_exists(T_MALL_SHOPPINGCAR cart) {
+      boolean b = false;
+      int i = cartMapper.select_cart_exists(cart);
+      if (i > 0) {
+         b = true;
+      }
+      return b;
+   }
+
+}
+```
+
+4.控制层(CartController)
+
+```java
+@Controller
+public class CartController {
+
+   @Autowired
+   CartServiceInf cartServiceInf;
+
+   @RequestMapping("add_cart")
+   public String add_cart(HttpSession session, HttpServletResponse response,
+         @CookieValue(value = "list_cart_cookie", required = false) String list_cart_cookie, T_MALL_SHOPPINGCAR cart,
+         ModelMap map) {
+      List<T_MALL_SHOPPINGCAR> list_cart = new ArrayList<T_MALL_SHOPPINGCAR>();
+      int yh_id = cart.getYh_id();
+
+      // 添加购物车操作
+      if (yh_id == 0) {
+         // 用户未登陆，操作cookie
+         if (StringUtils.isBlank(list_cart_cookie)) {
+            list_cart.add(cart);
+         } else {
+            list_cart = MyJsonUtil.json_to_list(list_cart_cookie, T_MALL_SHOPPINGCAR.class);
+            // 判断是否重复
+            boolean b = if_new_cart(list_cart, cart);
+            if (b) {
+               // 新车，添加
+               list_cart.add(cart);
+            } else {
+               // 老车，更新
+               for (int i = 0; i < list_cart.size(); i++) {
+                  if (list_cart.get(i).getSku_id() == cart.getSku_id()) {
+                     list_cart.get(i).setTjshl(list_cart.get(i).getTjshl() + cart.getTjshl());
+                     list_cart.get(i).setHj(list_cart.get(i).getTjshl() * list_cart.get(i).getSku_jg());
+                  }
+               }
+            }
+         }
+         // 覆盖cookie
+         Cookie cookie = new Cookie("list_cart_cookie", MyJsonUtil.list_to_json(list_cart));
+         cookie.setMaxAge(60 * 60 * 24);
+         response.addCookie(cookie);
+      } else {
+         list_cart = (List<T_MALL_SHOPPINGCAR>) session.getAttribute("list_cart_session");// 数据库
+         // 用户已登陆，操作db
+
+         boolean b = cartServiceInf.if_cart_exists(cart);
+
+         if (!b) {
+            cartServiceInf.add_cart(cart);
+            if (list_cart == null || list_cart.isEmpty()) {
+               list_cart = new ArrayList<T_MALL_SHOPPINGCAR>();
+               list_cart.add(cart);
+               session.setAttribute("list_cart_session", list_cart);
+            } else {
+               list_cart.add(cart);
+            }
+         } else {
+            for (int i = 0; i < list_cart.size(); i++) {
+               if (list_cart.get(i).getSku_id() == cart.getSku_id()) {
+                  list_cart.get(i).setTjshl(list_cart.get(i).getTjshl() + cart.getTjshl());
+                  list_cart.get(i).setHj(list_cart.get(i).getTjshl() * list_cart.get(i).getSku_jg());
+                  // 老车，更新
+                  cartServiceInf.update_cart(list_cart.get(i));
+               }
+            }
+         }
+      }
+
+      return "redirect:/cart_success.do";
+
+   }
+
+   private boolean if_new_cart(List<T_MALL_SHOPPINGCAR> list_cart, T_MALL_SHOPPINGCAR cart) {
+      boolean b = true;
+      for (int i = 0; i < list_cart.size(); i++) {
+         if (list_cart.get(i).getSku_id() == cart.getSku_id()) {
+            b = false;
+         }
+      }
+      return b;
+   }
+
+   @RequestMapping("cart_success")
+   public String cart_success(ModelMap map) {
+
+      return "cartSuccess";
+   }
+
+}
+```
+
+5.创建cartSuccess.jsp
+
+```jsp
+<body>
+   添加成功
+</body>
+```
 
 
 
@@ -1882,11 +3131,129 @@ $('#attrListInner').datagrid({
 
 ## 1.mini购物车
 
+1.增加miniCart.jsp
+
+```jsp
+<script type="text/javascript">
+   function show_cart(){
+      $.get("miniCart.do",function(data){
+         $("#cart_list").html(data);
+      });
+      $("#cart_list").show();
+   }
+   
+   function hide_cart(){
+      $("#cart_list").hide();
+   }
+</script>
+<title>硅谷商城</title>
+</head>
+<body>
+    <div class="card">
+         <a href="goto_cart_list.do" onmouseout="hide_cart()" onmouseover="show_cart()">购物车<div class="num">0</div></a>
+         
+         <!--购物车商品-->
+         <div id="cart_list" class="cart_pro" style="display:none;">
+            <jsp:include page="miniCartList.jsp"></jsp:include>
+         </div>
+      </div>
+
+</body>
+```
+
+2.修改searchArea.jsp
+
+```jsp
+<div class="search">
+   <div class="logo"><img src="./images/logo.jpg" alt=""></div>
+   <div class="search_on">
+      <div class="se">
+         <input type="text" name="search" class="lf">
+         <input type="submit" class="clik" value="搜索">
+      </div>
+      <div class="se">
+         <a href="">取暖神奇</a>
+         <a href="">1元秒杀</a>
+         <a href="">吹风机</a>
+         <a href="">玉兰油</a>
+      </div>
+   </div>
+   <jsp:include page="miniCart.jsp"></jsp:include>
+</div>
+```
+
+2.CartController
+
+```java
+@RequestMapping("miniCart")
+public String miniCart(HttpSession session,
+      @CookieValue(value = "list_cart_cookie", required = false) String list_cart_cookie, ModelMap map) {
+   List<T_MALL_SHOPPINGCAR> list_cart = new ArrayList<T_MALL_SHOPPINGCAR>();
+   T_MALL_USER_ACCOUNT user = (T_MALL_USER_ACCOUNT) session.getAttribute("user");
+
+   // 通过cookie或者session获取购物车数据
+   if (user == null) {
+      list_cart = MyJsonUtil.json_to_list(list_cart_cookie, T_MALL_SHOPPINGCAR.class);
+
+   } else {
+      list_cart = (List<T_MALL_SHOPPINGCAR>) session.getAttribute("list_cart_session");// 数据库
+
+   }
+
+   map.put("list_cart", list_cart);
+   return "miniCartList";
+}
+```
+
+
+
 
 
 ## 2.同步购物车
 
+LoginController增加同步购物车的方法
 
+![1538726472703](D:\project\test\mall\document\image\同步购物车.png)
+
+```java
+private void combine_cart(T_MALL_USER_ACCOUNT user, HttpServletResponse response, HttpSession session,
+      String list_cart_cookie) {
+   List<T_MALL_SHOPPINGCAR> list_cart = new ArrayList<T_MALL_SHOPPINGCAR>();
+
+   if (StringUtils.isBlank(list_cart_cookie)) {
+      //
+   } else {
+      // 判断db是否为空
+      List<T_MALL_SHOPPINGCAR> list_cart_db = cartServiceInf.get_list_cart_by_user(user);
+      list_cart = MyJsonUtil.json_to_list(list_cart_cookie, T_MALL_SHOPPINGCAR.class);
+
+      for (int i = 0; i < list_cart.size(); i++) {
+         T_MALL_SHOPPINGCAR cart = list_cart.get(i);
+         cart.setYh_id(user.getId());
+         boolean b = cartServiceInf.if_cart_exists(list_cart.get(i));
+
+         if (b) {
+            // 更新
+            for (int j = 0; j < list_cart_db.size(); j++) {
+               if (cart.getSku_id() == list_cart_db.get(j).getSku_id()) {
+                  cart.setTjshl(cart.getTjshl() + list_cart_db.get(j).getTjshl());
+                  cart.setHj(cart.getTjshl() * cart.getSku_jg());
+                  // 老车，更新
+                  cartServiceInf.update_cart(cart);
+               }
+            }
+         } else {
+            // 添加
+            cartServiceInf.add_cart(cart);
+         }
+      }
+   }
+   // 同步session，清空cookie
+   session.setAttribute("list_cart_session", cartServiceInf.get_list_cart_by_user(user));
+   response.addCookie(new Cookie("list_cart_cookie", ""));
+
+}
+```
 
 ## 3.购物车的列表显示
 

@@ -28,7 +28,7 @@
 			$("#class_2_ul").empty();
 			$(data).each(function(i,json){
 				// 将分类集合的内容生成<option>对象加载到下拉列表中
-				$("#class_2_ul").append("<li value="+json.id+"><a href='goto_search_class.do?class_2_id="+json.id+"' target='_blank'>"+json.flmch2+"</a></li>");
+                $("#class_2_ul").append("<li value="+json.id+"><a href='goto_list.do?flbh2="+json.id+"' target='_blank'>"+json.flmch2+"</a></li>");
 			});
 		});
 	}
