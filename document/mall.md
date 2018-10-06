@@ -2720,7 +2720,15 @@ public class ItemController {
 }
 ```
 
-6.skuDetail.jsp
+6.修改`skuList.jsp`
+
+```jsp
+<a href="goto_sku_detail.do?sku_id=${sku.id}&spu_id=${sku.spu.id}" target="_blank">${sku.sku_mch}</a><br>
+```
+
+
+
+7.skuDetail.jsp
 
 ```jsp
 <%@ page language="java" contentType="text/html; charset=UTF-8"
