@@ -3265,6 +3265,93 @@ private void combine_cart(T_MALL_USER_ACCOUNT user, HttpServletResponse response
 
 ## 3.购物车的列表显示
 
+1.创建cartList.jsp
+
+```js
+function change_shfxz(checked, sku_id) {
+    var shfxz = "0";
+    if (checked) {
+        shfxz = "1";
+    }
+
+    $.post("change_shfxz.do", {sku_id: sku_id, shfxz: shfxz}, function (data) {
+        $("#cartListInner").html(data);
+    });
+}
+```
+
+```jsp
+<div class="search">
+    <div class="logo"><img src="./images/logo.jpg" alt=""></div>
+    <div class="search_on">
+        <div class="se">
+            <input type="text" name="search" class="lf">
+            <input type="submit" class="clik" value="搜索" style="height: 32px;">
+        </div>
+        <div class="se">
+            <a href="">取暖神奇</a>
+            <a href="">1元秒杀</a>
+            <a href="">吹风机</a>
+            <a href="">玉兰油</a>
+        </div>
+    </div>
+</div>
+<div id="cartListInner">
+    <jsp:include page="cartListInner.jsp"></jsp:include>
+</div>
+
+<div class="footer">
+    <div class="top"></div>
+    <div class="bottom"><img src="images/foot.jpg" alt=""></div>
+</div>
+```
+
+2.创建cartListInner.jsp
+
+```jsp
+<div class="Cbox">
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>商品图片</th>
+            <th>商品名称</th>
+            <th>商品属性</th>
+            <th>商品价格</th>
+            <th>商品数量</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${list_cart}" var="cart">
+            <tr>
+
+                <td><input onclick="change_shfxz(this.checked,${cart.sku_id})"
+                           type="checkbox" ${cart.shfxz=="1"?"checked":""}/>${cart.shfxz}<img
+                        src="upload/image/${cart.shp_tp}" alt="" width="80px"></td>
+                <td>${cart.sku_mch}</td>
+                <td>
+                    颜色：<span style='color:#ccc'>白色</span><br>
+                    尺码：<span style='color:#ccc'>L</span>
+                </td>
+                <td>${cart.sku_jg}</td>
+                <td><input type="text" name="min" value="${cart.tjshl}" style="width:50px;text-align:center"></td>
+                <td>删除</td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+</div>
+
+<div class="Cprice">
+    <div class="price">总价：${sum}</div>
+    <div class="jiesuan">结算</div>
+</div>
+```
+
+
+
+
+
 
 
 ## 4.购物车修改选中的跳转
