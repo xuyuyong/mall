@@ -119,6 +119,13 @@ public class CartController {
         return sum;
     }
 
+    /**
+     * 跳转至购物车列表
+     * @param session
+     * @param list_cart_cookie
+     * @param map
+     * @return
+     */
     @RequestMapping("goto_cart_list")
     public String goto_cart_list(HttpSession session,
                                  @CookieValue(value = "list_cart_cookie", required = false) String list_cart_cookie, ModelMap map) {

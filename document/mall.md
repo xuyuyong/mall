@@ -3348,9 +3348,39 @@ function change_shfxz(checked, sku_id) {
 </div>
 ```
 
+3.CartController增加跳转至购物车列表
 
+```java
+@RequestMapping("goto_cart_list")
+public String goto_cart_list(HttpSession session,
+                             @CookieValue(value = "list_cart_cookie", required = false) String list_cart_cookie, ModelMap map) {
+    List<T_MALL_SHOPPINGCAR> list_cart = new ArrayList<T_MALL_SHOPPINGCAR>();
+    T_MALL_USER_ACCOUNT user = (T_MALL_USER_ACCOUNT) session.getAttribute("user");
 
+    // 通过cookie或者session获取购物车数据
+    if (user == null) {
+        list_cart = MyJsonUtil.json_to_list(list_cart_cookie, T_MALL_SHOPPINGCAR.class);
 
+    } else {
+        list_cart = (List<T_MALL_SHOPPINGCAR>) session.getAttribute("list_cart_session");// 数据库
+
+    }
+
+    map.put("list_cart", list_cart);
+    map.put("sum", get_sum(list_cart));
+    return "cartList";
+}
+
+private BigDecimal get_sum(List<T_MALL_SHOPPINGCAR> list_cart) {
+        BigDecimal sum = new BigDecimal("0");
+        for (int i = 0; i < list_cart.size(); i++) {
+            if (list_cart.get(i).getShfxz().equals("1")) {
+                sum = sum.add(new BigDecimal(list_cart.get(i).getHj() + ""));
+            }
+        }
+        return sum;
+    }
+```
 
 
 
