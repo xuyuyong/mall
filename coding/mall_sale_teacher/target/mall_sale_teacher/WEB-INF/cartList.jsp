@@ -27,28 +27,28 @@
     <title>硅谷商城</title>
 </head>
 <body>
-<div class="search">
-    <div class="logo"><img src="./images/logo.jpg" alt=""></div>
-    <div class="search_on">
-        <div class="se">
-            <input type="text" name="search" class="lf">
-            <input type="submit" class="clik" value="搜索" style="height: 32px;">
-        </div>
-        <div class="se">
-            <a href="">取暖神奇</a>
-            <a href="">1元秒杀</a>
-            <a href="">吹风机</a>
-            <a href="">玉兰油</a>
+    <div class="search">
+        <div class="logo"><img src="./images/logo.jpg" alt=""></div>
+        <div class="search_on">
+            <div class="se">
+                <input type="text" name="search" class="lf">
+                <input type="submit" class="clik" value="搜索" style="height: 32px;">
+            </div>
+            <div class="se">
+                <a href="">取暖神奇</a>
+                <a href="">1元秒杀</a>
+                <a href="">吹风机</a>
+                <a href="">玉兰油</a>
+            </div>
         </div>
     </div>
-</div>
-<div id="cartListInner">
-    <jsp:include page="cartListInner.jsp"></jsp:include>
-</div>
+    <div id="cartListInner">
+        <jsp:include page="cartListInner.jsp"></jsp:include>
+    </div>
 
-<div class="footer">
-    <div class="top"></div>
-    <div class="bottom"><img src="images/foot.jpg" alt=""></div>
-</div>
+    <div class="footer">
+        <div class="top"></div>
+        <div class="bottom"><img src="images/foot.jpg" alt=""></div>
+    </div>
 </body>
 </html>
