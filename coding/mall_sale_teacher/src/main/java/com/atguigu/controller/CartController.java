@@ -145,9 +145,11 @@ public class CartController {
 
     private BigDecimal get_sum(List<T_MALL_SHOPPINGCAR> list_cart) {
         BigDecimal sum = new BigDecimal("0");
-        for (int i = 0; i < list_cart.size(); i++) {
-            if (list_cart.get(i).getShfxz().equals("1")) {
-                sum = sum.add(new BigDecimal(list_cart.get(i).getHj() + ""));
+        if (list_cart != null && list_cart.size() > 0) {
+            for (int i = 0; i < list_cart.size(); i++) {
+                if (list_cart.get(i).getShfxz().equals("1")) {
+                    sum = sum.add(new BigDecimal(list_cart.get(i).getHj() + ""));
+                }
             }
         }
         return sum;
