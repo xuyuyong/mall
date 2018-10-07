@@ -3384,35 +3384,66 @@ private BigDecimal get_sum(List<T_MALL_SHOPPINGCAR> list_cart) {
 
 
 
-## 4.购物车修改选中的跳转
 
 
 
-## 5.购物车修改
 
+## 4.购物车修改
 
+> ```java
+> CartController
+> ```
 
-## 6.价格计算
+```java
+@RequestMapping("change_shfxz")
+public String change_shfxz(HttpServletResponse response, HttpSession session,
+                           @CookieValue(value = "list_cart_cookie", required = false) String list_cart_cookie, T_MALL_SHOPPINGCAR cart,
+                           ModelMap map) {
+    List<T_MALL_SHOPPINGCAR> list_cart = new ArrayList<T_MALL_SHOPPINGCAR>();
+    T_MALL_USER_ACCOUNT user = (T_MALL_USER_ACCOUNT) session.getAttribute("user");
+    // 购物车修改业务
+    if (user == null) {
+        // 修改cookie
+        list_cart = MyJsonUtil.json_to_list(list_cart_cookie, T_MALL_SHOPPINGCAR.class);
+    } else {
+        // 修改db
+        list_cart = (List<T_MALL_SHOPPINGCAR>) session.getAttribute("list_cart_session");// 数据库
+    }
 
+    for (int i = 0; i < list_cart.size(); i++) {
+        if (list_cart.get(i).getSku_id() == cart.getSku_id()) {
+            list_cart.get(i).setShfxz(cart.getShfxz());
+            if (user == null) {
+                // 覆盖cookie
+                Cookie cookie = new Cookie("list_cart_cookie", MyJsonUtil.list_to_json(list_cart));
+                cookie.setMaxAge(60 * 60 * 24);
+                response.addCookie(cookie);
+            } else {
+                cartServiceInf.update_cart(list_cart.get(i));
+            }
+        }
+    }
+    map.put("sum", get_sum(list_cart));
+    map.put("list_cart", list_cart);
+    return "cartListInner";
+}
+```
 
+## 5.价格计算
 
-## 7.关于用户系统的介绍
+> CartController
 
-
-
-## 8.关于ws协议
-
-
-
-## 9.ws的jdk的介绍
-
-
-
-## 10.ws的工具
-
-
-
-## 11.用户登录接口
+```java
+private BigDecimal get_sum(List<T_MALL_SHOPPINGCAR> list_cart) {
+   BigDecimal sum = new BigDecimal("0");
+   for (int i = 0; i < list_cart.size(); i++) {
+      if (list_cart.get(i).getShfxz().equals("1")) {
+         sum = sum.add(new BigDecimal(list_cart.get(i).getHj() + ""));
+      }
+   }
+   return sum;
+}
+```
 
 
 
@@ -3429,6 +3460,18 @@ private BigDecimal get_sum(List<T_MALL_SHOPPINGCAR> list_cart) {
 
 
 # 八. ws安全
+
+
+
+## 1.ws的工具
+
+
+
+## 2.用户登录接口
+
+
+
+
 
 ## 1.ws接口调用整合
 
