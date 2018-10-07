@@ -3482,15 +3482,93 @@ private BigDecimal get_sum(List<T_MALL_SHOPPINGCAR> list_cart) {
 
 
 
-## 12.gson
+## 6.gson
+
+```xml
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+
+```
+
+```java
+		//对象 与 json字符串 互换
+        ClassJson json = new ClassJson(1, "手机");
+        System.out.println(json);
+
+        //创建gson对象
+        Gson gson = new Gson();
+        String str = gson.toJson(json);
+        System.out.println(str);
+
+        ClassJson json1 = gson.fromJson(str, ClassJson.class);
+        System.out.println(json1);
+
+        List<ClassJson> jsons = new ArrayList<ClassJson>();
+        jsons.add(json);
+        jsons.add(json1);
+        System.out.println(jsons);
+
+        String strs = gson.toJson(jsons);
+        //集合 与 json字符串 互换
+        TypeToken token = new TypeToken<List<ClassJson>>(){};
+        ArrayList<ClassJson> list = gson.fromJson(strs, token.getType());
+        System.out.println(list);
+```
 
 
 
-## 13.jsonlib
+## 7.jsonlib
+
+```xml
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.4</version>
+			<classifier>jdk15</classifier>
+		</dependency>
+```
+
+```java
+List<ClassJson> jsons = new ArrayList<ClassJson>();
+        ClassJson json = new ClassJson(1, "手机"), json1 = new ClassJson(2, "电脑");
+        
+        JSONObject jsonObject = JSONObject.fromObject(json);
+        String s = jsonObject.toString();
+        System.out.println("1."+s);
+
+        Object o = JSONObject.toBean(jsonObject, ClassJson.class);
+        System.out.println("2."+o);
+
+        jsons.add(json);
+        jsons.add(json1);
+        JSONArray jsonArray = JSONArray.fromObject(jsons);
+        List<ClassJson> classJsons = (List<ClassJson>)JSONArray.toCollection(jsonArray, ClassJson.class);
+        System.out.println("3."+classJsons);
+```
 
 
 
-## 14.fastjson
+## 8.fastjson
+
+```xml
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.44</version>
+		</dependency>
+
+```
+
+```java
+
+```
+
+
+
+
 
 
 
