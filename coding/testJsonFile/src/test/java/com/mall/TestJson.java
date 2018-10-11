@@ -71,23 +71,23 @@ public class TestJson {
         ClassJson json = new ClassJson(1, "手机");
         System.out.println(json);
 
-        //创建gson对象
         String str = JSON.toJSONString(json);
-        System.out.println(str);
+        System.out.println("1."+str);
 
-        ClassJson json1 = gson.fromJson(str, ClassJson.class);
-        System.out.println(json1);
+        ClassJson json1 = JSON.parseObject(str, ClassJson.class);
+        System.out.println("2."+json1);
 
+        //集合 与 json 字符串互转
         List<ClassJson> jsons = new ArrayList<ClassJson>();
         jsons.add(json);
-        jsons.add(json1);
-        System.out.println(jsons);
+        jsons.add(new ClassJson(2, "电脑"));
+        System.out.println("3."+jsons);
 
-        String strs = gson.toJson(jsons);
-        //集合 与 json字符串 互换
-        TypeToken token = new TypeToken<List<ClassJson>>(){};
-        ArrayList<ClassJson> list = gson.fromJson(strs, token.getType());
-        System.out.println(list);
+        String string = JSON.toJSONString(jsons);
+        System.out.println(string);
+        List<ClassJson> classJsons = JSON.parseArray(string, ClassJson.class);
+
+        System.out.println("4."+classJsons);
     }
 
 }
