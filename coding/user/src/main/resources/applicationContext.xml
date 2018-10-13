@@ -54,7 +54,7 @@
 	</jaxws:endpoint>
 
 
-	<jaxws:endpoint address="/login"
+	<!--<jaxws:endpoint address="/login"
 		implementorClass="com.atguigu.server.LoginServerInf">
 		<jaxws:implementor>
 			<bean class="com.atguigu.server.LoginServerImp"></bean>
@@ -65,7 +65,7 @@
 		<jaxrs:serviceBeans>
 			<bean class="com.atguigu.server.LoginServerImp"></bean>
 		</jaxrs:serviceBeans>
-	</jaxrs:server>
+	</jaxrs:server>-->
 
 
 
