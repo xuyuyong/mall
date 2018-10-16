@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>mall_sale_teacher</groupId>
-    <artifactId>mall_sale_teacher</artifactId>
+    <groupId>mall_user_teacher</groupId>
+    <artifactId>mall_user_teacher</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -141,7 +141,7 @@
     </dependencies>
 
     <build>
-        <finalName>mall_sale_teacher</finalName>
+        <finalName>mall_user_teacher</finalName>
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
             <plugins>
                 <plugin>

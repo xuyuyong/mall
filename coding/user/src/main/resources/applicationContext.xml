@@ -38,6 +38,7 @@
 
 	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath:mapper/*.xml"/>
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
 	</bean>
 
@@ -54,14 +55,14 @@
 	</jaxws:endpoint>
 
 
-	<!--<jaxws:endpoint address="/login"
+	<jaxws:endpoint address="/login"
 		implementorClass="com.atguigu.server.LoginServerInf">
 		<jaxws:implementor>
 			<bean class="com.atguigu.server.LoginServerImp"></bean>
 		</jaxws:implementor>
 	</jaxws:endpoint>
 
-	<jaxrs:server address="/loginRest">
+	<!--<jaxrs:server address="/loginRest">
 		<jaxrs:serviceBeans>
 			<bean class="com.atguigu.server.LoginServerImp"></bean>
 		</jaxrs:serviceBeans>

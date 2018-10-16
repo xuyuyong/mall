@@ -3,24 +3,15 @@ package com.atguigu.bean;
 import javax.ws.rs.FormParam;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
 public class T_MALL_USER_ACCOUNT {
 
-	@FormParam("id")
 	private int id;
-	@FormParam("yh_mch")
 	private String yh_mch;
-	@FormParam("yh_nch")
 	private String yh_nch;
-	@FormParam("yh_mm")
 	private String yh_mm;
-	@FormParam("yh_xm")
 	private String yh_xm;
-	@FormParam("yh_shjh")
 	private String yh_shjh;
-	@FormParam("yh_yx")
 	private String yh_yx;
-	@FormParam("yh_tx")
 	private String yh_tx;
 
 	public int getId() {
